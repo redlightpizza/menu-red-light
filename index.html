@@ -2,200 +2,211 @@
 <html lang="es">
 <head>
 <meta charset="UTF-8">
-<title>Menú - Pedido</title>
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Red Light Pizza - Menú</title>
 
 <style>
-
-body{
-font-family: Arial;
-background:#fff;
-margin:0;
-padding:20px;
-}
-
-h1{
-text-align:center;
-}
-
-.menu{
-max-width:600px;
-margin:auto;
-}
-
-.bloque{
-border:1px solid #ddd;
-padding:15px;
-margin-bottom:20px;
-border-radius:10px;
-}
-
-button{
-padding:10px 15px;
-margin:5px;
-border:none;
-background:#e63946;
-color:white;
-border-radius:8px;
-cursor:pointer;
-}
-
-button:hover{
-background:#c1121f;
-}
-
-select,input{
-width:100%;
-padding:10px;
-margin-top:5px;
-margin-bottom:10px;
-}
-
-.oculto{
-display:none;
-}
-
+body{font-family:Arial;margin:0;background:#111;color:#fff}
+header{background:#b30000;padding:16px;text-align:center}
+header img{max-width:160px;display:block;margin:auto}
+h1{margin:8px 0 0 0;font-size:26px}
+.container{max-width:800px;margin:auto;padding:16px}
+.top-actions{display:flex;gap:10px;flex-wrap:wrap;justify-content:center;margin-bottom:12px}
+.btn{border:none;border-radius:8px;padding:12px 14px;cursor:pointer}
+.btn-map{background:#2a7be4;color:#fff}
+.btn-wa{background:#25D366;color:#fff}
+.notice{background:#222;border-left:4px solid #ff3b3b;padding:10px;border-radius:6px;margin:10px 0;display:none}
+.categories{display:grid;grid-template-columns:repeat(2,1fr);gap:10px;margin:12px 0}
+.cat{background:#1c1c1c;border-radius:10px;padding:14px;text-align:center;cursor:pointer}
+.cat:hover{background:#262626}
+.section{display:none;margin-top:10px}
+.grid{display:grid;grid-template-columns:repeat(2,1fr);gap:10px}
+.card{background:#1c1c1c;border-radius:10px;overflow:hidden}
+.card img{width:100%;height:120px;object-fit:cover;background:#333}
+.card .name{padding:10px;font-weight:bold}
+.card button{width:100%;border:none;background:#ff3b3b;color:#fff;padding:10px;cursor:pointer}
+.form{background:#1c1c1c;border-radius:10px;padding:12px;margin-top:14px}
+select,input{width:100%;padding:10px;border-radius:6px;border:none;margin:8px 0}
+.summary{background:#222;border-radius:8px;padding:10px;margin-top:10px}
+.hidden{display:none}
 </style>
 </head>
 
 <body>
 
-<h1>Realizar Pedido</h1>
+<header>
+<!-- Reemplaza logo.png cuando lo tengas -->
+<img src="logo.png" alt="Logo (agregar después)">
+<h1>Red Light Pizza</h1>
+</header>
 
-<div class="menu">
+<div class="container">
 
-<div class="bloque">
+<div class="top-actions">
+<button class="btn btn-map" onclick="window.open('https://maps.app.goo.gl/qTqgFosuuYSwSi4q6')">Ver ubicación</button>
+</div>
 
+<div class="form">
 <label>Tipo de pedido</label>
-
 <select id="tipoPedido">
-<option value="">Seleccionar</option>
-<option value="domicilio">A domicilio</option>
 <option value="recoger">Pasar a recoger</option>
+<option value="domicilio">A domicilio</option>
 </select>
 
-<p id="mensajeDomicilio" class="oculto">
+<div id="msgDomicilio" class="notice">
 Para pedidos a domicilio envíanos tu ubicación por WhatsApp para cotizar el envío.
-</p>
-
 </div>
-
-
-<div class="bloque">
-
-<h3>Pizza</h3>
-
-<label>Tamaño</label>
-
-<select id="tamanoPizza">
-<option value="">Seleccionar tamaño</option>
-<option value="Individual">Individual</option>
-<option value="Grande">Grande</option>
-</select>
-
-</div>
-
-
-<div class="bloque">
-
-<label>¿Deseas agregar salsa o aderezo?</label>
-
-<select id="salsaPregunta">
-<option value="">Seleccionar</option>
-<option value="si">Sí</option>
-<option value="no">No</option>
-</select>
-
-<div id="opcionesSalsas" class="oculto">
-
-<label>Salsas / Aderezos</label>
-
-<select id="salsaElegida">
-<option value="">Seleccionar</option>
-<option>Ranch</option>
-<option>Chipotle</option>
-<option>BBQ</option>
-<option>Habanero</option>
-<option>Catsup</option>
-</select>
-
-</div>
-
-</div>
-
-
-<div class="bloque">
 
 <label>Pedido a nombre de</label>
-
-<input type="text" id="nombrePedido" placeholder="Nombre">
-
+<input id="nombre" placeholder="Nombre del cliente">
 </div>
 
+<h2>Categorías</h2>
+<div class="categories">
+<div class="cat" onclick="mostrar('entradas')">🍗 Entradas</div>
+<div class="cat" onclick="mostrar('pizzas')">🍕 Pizzas</div>
+<div class="cat" onclick="mostrar('pastas')">🍝 Pastas</div>
+<div class="cat" onclick="mostrar('ensaladas')">🥗 Ensaladas</div>
+<div class="cat" onclick="mostrar('bebidas')">🥤 Bebidas</div>
+</div>
 
-<div class="bloque">
+<!-- ENTRADAS -->
+<div id="entradas" class="section">
+<h2>Entradas</h2>
+<div class="grid">
+<div class="card"><img src="entrada-chicken.jpg"><div class="name">Chicken Tenders</div><button onclick="agregar('Chicken Tenders')">Agregar</button></div>
+<div class="card"><img src="papas-francesa.jpg"><div class="name">Papas a la francesa</div><button onclick="agregar('Papas a la francesa')">Agregar</button></div>
+<div class="card"><img src="papas-gajo.jpg"><div class="name">Papas gajo</div><button onclick="agregar('Papas gajo')">Agregar</button></div>
+<div class="card"><img src="pan-ajo.jpg"><div class="name">Pan de ajo</div><button onclick="agregar('Pan de ajo')">Agregar</button></div>
+<div class="card"><img src="calzone-espinaca.jpg"><div class="name">Calzone de espinacas</div><button onclick="agregar('Calzone de espinacas')">Agregar</button></div>
+<div class="card"><img src="calzone-4quesos.jpg"><div class="name">Calzone 4 quesos</div><button onclick="agregar('Calzone 4 quesos')">Agregar</button></div>
+<div class="card"><img src="calzone-italiano.jpg"><div class="name">Calzone italiano</div><button onclick="agregar('Calzone italiano')">Agregar</button></div>
+</div>
+</div>
 
-<button onclick="enviarPedido()">Enviar pedido por WhatsApp</button>
+<!-- PIZZAS -->
+<div id="pizzas" class="section">
+<h2>Pizzas</h2>
+<div class="grid">
+<div class="card"><img src="marguerita.jpg"><div class="name">Marguerita</div><button onclick="agregarPizza('Marguerita')">Agregar</button></div>
+<div class="card"><img src="valentina.jpg"><div class="name">Valentina</div><button onclick="agregarPizza('Valentina')">Agregar</button></div>
+<div class="card"><img src="lucrecia.jpg"><div class="name">Lucrecia</div><button onclick="agregarPizza('Lucrecia')">Agregar</button></div>
+<div class="card"><img src="alessia.jpg"><div class="name">Alessia</div><button onclick="agregarPizza('Alessia')">Agregar</button></div>
+<div class="card"><img src="adriana.jpg"><div class="name">Adriana</div><button onclick="agregarPizza('Adriana')">Agregar</button></div>
+<div class="card"><img src="kalena.jpg"><div class="name">Kalena</div><button onclick="agregarPizza('Kalena')">Agregar</button></div>
+<div class="card"><img src="leilani.jpg"><div class="name">Leilani</div><button onclick="agregarPizza('Leilani')">Agregar</button></div>
+<div class="card"><img src="olivia.jpg"><div class="name">Olivia</div><button onclick="agregarPizza('Olivia')">Agregar</button></div>
+<div class="card"><img src="bianca.jpg"><div class="name">Bianca</div><button onclick="agregarPizza('Bianca')">Agregar</button></div>
+<div class="card"><img src="francesca.jpg"><div class="name">Francesca</div><button onclick="agregarPizza('Francesca')">Agregar</button></div>
+<div class="card"><img src="sofia.jpg"><div class="name">Sofia</div><button onclick="agregarPizza('Sofia')">Agregar</button></div>
+<div class="card"><img src="amalia.jpg"><div class="name">Amalia</div><button onclick="agregarPizza('Amalia')">Agregar</button></div>
+<div class="card"><img src="marietta.jpg"><div class="name">Marietta</div><button onclick="agregarPizza('Marietta')">Agregar</button></div>
+</div>
+</div>
 
+<!-- PASTAS -->
+<div id="pastas" class="section">
+<h2>Pastas</h2>
+<div class="grid">
+<div class="card"><img src="pomodoro.jpg"><div class="name">Pasta Pomodoro</div><button onclick="agregar('Pasta Pomodoro')">Agregar</button></div>
+<div class="card"><img src="alfredo.jpg"><div class="name">Pasta Alfredo</div><button onclick="agregar('Pasta Alfredo')">Agregar</button></div>
+<div class="card"><img src="aurora.jpg"><div class="name">Pasta Aurora</div><button onclick="agregar('Pasta Aurora')">Agregar</button></div>
+</div>
+</div>
+
+<!-- ENSALADAS -->
+<div id="ensaladas" class="section">
+<h2>Ensaladas</h2>
+<div class="grid">
+<div class="card"><img src="ensalada-italiana.jpg"><div class="name">Ensalada italiana</div><button onclick="agregar('Ensalada italiana')">Agregar</button></div>
+<div class="card"><img src="ensalada-cesar.jpg"><div class="name">Ensalada Cesare</div><button onclick="agregar('Ensalada Cesare')">Agregar</button></div>
+</div>
+</div>
+
+<!-- BEBIDAS -->
+<div id="bebidas" class="section">
+<h2>Bebidas</h2>
+<div class="grid">
+<div class="card"><img src="coca.jpg"><div class="name">Coca</div><button onclick="agregar('Coca')">Agregar</button></div>
+<div class="card"><img src="sprite.jpg"><div class="name">Sprite</div><button onclick="agregar('Sprite')">Agregar</button></div>
+<div class="card"><img src="corona.jpg"><div class="name">Corona</div><button onclick="agregar('Corona')">Agregar</button></div>
+<div class="card"><img src="modelo.jpg"><div class="name">Modelo</div><button onclick="agregar('Modelo')">Agregar</button></div>
+<div class="card"><img src="agua-mineral.jpg"><div class="name">Agua mineral</div><button onclick="agregar('Agua mineral')">Agregar</button></div>
+<div class="card"><img src="te-negro.jpg"><div class="name">Té negro</div><button onclick="agregar('Té negro')">Agregar</button></div>
+</div>
+</div>
+
+<div class="form">
+<label>Salsa o aderezo</label>
+<select id="salsa">
+<option>Ninguno</option>
+<option>Pesto</option>
+<option>Ajo parmesano</option>
+<option>Dulce de leche</option>
+<option>Infusión de tomillo</option>
+</select>
+
+<div id="tamanoBox" class="hidden">
+<label>Tamaño pizza</label>
+<select id="tamano">
+<option>Individual</option>
+<option>Grande</option>
+</select>
+</div>
+
+<div class="summary" id="resumen">Pedido vacío</div>
+
+<button class="btn btn-wa" onclick="enviar()">Enviar pedido por WhatsApp</button>
 </div>
 
 </div>
-
 
 <script>
+let pedido=[]
 
-const pregunta = document.getElementById("salsaPregunta");
-const opciones = document.getElementById("opcionesSalsas");
+function mostrar(id){
+document.querySelectorAll('.section').forEach(s=>s.style.display='none')
+document.getElementById(id).style.display='block'
+}
 
-pregunta.addEventListener("change",function(){
+function agregar(nombre){
+pedido.push(nombre)
+actualizar()
+}
 
-if(this.value === "si"){
-opciones.style.display="block";
+function agregarPizza(nombre){
+document.getElementById('tamanoBox').classList.remove('hidden')
+pedido.push(nombre)
+actualizar()
+}
+
+function actualizar(){
+document.getElementById('resumen').innerText="Pedido: "+pedido.join(", ")
+}
+
+document.getElementById("tipoPedido").addEventListener("change",function(){
+if(this.value=="domicilio"){
+document.getElementById("msgDomicilio").style.display="block"
 }else{
-opciones.style.display="none";
+document.getElementById("msgDomicilio").style.display="none"
 }
+})
 
-});
+function enviar(){
 
-const tipoPedido = document.getElementById("tipoPedido");
-const mensaje = document.getElementById("mensajeDomicilio");
+let nombre=document.getElementById("nombre").value
+let salsa=document.getElementById("salsa").value
+let tamano=document.getElementById("tamano") ? document.getElementById("tamano").value : ""
 
-tipoPedido.addEventListener("change",function(){
+let texto=`Pedido Red Light Pizza%0A
+Nombre: ${nombre}%0A
+Productos: ${pedido.join(", ")}%0A
+Tamaño pizza: ${tamano}%0A
+Salsa: ${salsa}`
 
-if(this.value === "domicilio"){
-mensaje.style.display="block";
-}else{
-mensaje.style.display="none";
+let telefono="529515813970"
+window.open(`https://wa.me/${telefono}?text=${texto}`)
 }
-
-});
-
-
-function enviarPedido(){
-
-let tipo = document.getElementById("tipoPedido").value;
-let tamano = document.getElementById("tamanoPizza").value;
-let salsa = document.getElementById("salsaElegida").value;
-let nombre = document.getElementById("nombrePedido").value;
-
-let texto="PEDIDO:%0A";
-
-texto += "Tipo de pedido: "+tipo+"%0A";
-texto += "Pizza tamaño: "+tamano+"%0A";
-
-if(salsa){
-texto += "Salsa/aderezo: "+salsa+"%0A";
-}
-
-texto += "A nombre de: "+nombre;
-
-let telefono="5219515813970";
-
-let url="https://wa.me/"+telefono+"?text="+texto;
-
-window.open(url);
-
-}
-
 </script>
 
 </body>
