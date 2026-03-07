@@ -5,43 +5,62 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Red Light Pizza - Menú</title>
     <style>
-        body { background-color: #000; color: #fff; font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; margin: 0; padding: 20px; text-align: center; }
-        .logo { color: #ff0000; font-size: 2.5rem; font-weight: bold; text-transform: uppercase; margin-bottom: 10px; }
-        .btn-container { display: flex; flex-direction: column; gap: 15px; margin-top: 30px; }
-        .btn { background-color: #ff0000; color: white; border: none; padding: 15px; font-size: 1.1rem; border-radius: 8px; cursor: pointer; text-decoration: none; font-weight: bold; }
-        #menu-content { display: none; margin-top: 30px; text-align: left; }
-        .item { border-bottom: 1px solid #333; padding: 10px 0; display: flex; justify-content: space-between; }
+        body { background-color: #000; color: #fff; font-family: 'Helvetica', Arial, sans-serif; margin: 0; padding: 0; text-align: center; }
+        .header { padding: 50px 20px; border-bottom: 3px solid #ff0000; margin-bottom: 20px; }
+        .logo-text { color: #ff0000; font-size: 2.8rem; font-weight: bold; text-transform: uppercase; letter-spacing: 3px; }
+        .tagline { color: #888; font-size: 0.9rem; margin-top: 5px; }
+        .btn-container { padding: 20px; display: flex; flex-direction: column; gap: 15px; }
+        .btn { background-color: #ff0000; color: #fff; border: none; padding: 18px; font-size: 1.1rem; border-radius: 5px; font-weight: bold; text-decoration: none; cursor: pointer; text-transform: uppercase; }
+        .btn-outline { background-color: transparent; border: 2px solid #ff0000; }
+        #aviso-ubicacion { display: none; color: #ff0000; font-weight: bold; padding: 10px; margin-top: 10px; font-size: 0.9rem; border: 1px dashed #ff0000; }
+        #menu-desplegable { display: none; padding: 20px; text-align: left; background-color: #0a0a0a; }
+        h2 { color: #ff0000; border-bottom: 1px solid #333; padding-bottom: 10px; margin-top: 30px; text-transform: uppercase; font-size: 1.2rem; }
+        .item { display: flex; justify-content: space-between; padding: 12px 0; border-bottom: 1px solid #1a1a1a; }
         .item-name { color: #ff0000; font-weight: bold; }
-        h2 { border-bottom: 2px solid #ff0000; padding-bottom: 5px; margin-top: 25px; }
     </style>
 </head>
 <body>
 
-    <div class="logo">Red Light Pizza</div>
-    <p>Selecciona cómo quieres tu pedido:</p>
-
-    <div class="btn-container">
-        <button class="btn" onclick="mostrarMenu()">Consumir en restaurante</button>
-        <a href="https://wa.me/tu_numero_aqui" class="btn">Domicilio / Recoger</a>
+    <div class="header">
+        <div class="logo-text">RED LIGHT PIZZA</div>
+        <div class="tagline">PIZZA & DRINKS | TELIXTLAHUACA</div>
     </div>
 
-    <div id="menu-content">
+    <div class="btn-container">
+        <button class="btn" onclick="mostrarRestaurante()">Consumir en restaurante</button>
+        <button class="btn btn-outline" onclick="mostrarDomicilio()">Domicilio / Recoger</button>
+        <div id="aviso-ubicacion">⚠️ Para pedidos a domicilio, por favor envía tu ubicación por WhatsApp para cotizar el envío.</div>
+        <a id="link-whatsapp" href="https://wa.me/529515813970?text=Hola%20Red%20Light%20Pizza,%20quiero%20hacer%20un%20pedido.%20Aquí%20está%20mi%20ubicación:" class="btn" style="display:none; margin-top:10px; background-color:#25d366;">Enviar Pedido por WhatsApp</a>
+    </div>
+
+    <div id="menu-desplegable">
         <h2>Pizzas Especiales</h2>
         <div class="item"><span class="item-name">Francesca</span> <span>$---</span></div>
         <div class="item"><span class="item-name">Amalia</span> <span>$---</span></div>
-        
         <h2>Entradas</h2>
         <div class="item"><span class="item-name">Papas Gajo</span> <span>$---</span></div>
-        
         <h2>Bebidas</h2>
         <div class="item"><span class="item-name">Cerveza Nacional</span> <span>$---</span></div>
         <div class="item"><span class="item-name">Artesanales</span> <span>$---</span></div>
     </div>
 
     <script>
-        function mostrarMenu() {
-            document.getElementById('menu-content').style.display = 'block';
-            window.scrollTo({ top: document.body.scrollHeight, behavior: 'smooth' });
+        function mostrarRestaurante() {
+            document.getElementById("aviso-ubicacion").style.display = "none";
+            document.getElementById("link-whatsapp").style.display = "none";
+            abrirMenu();
+        }
+
+        function mostrarDomicilio() {
+            document.getElementById("aviso-ubicacion").style.display = "block";
+            document.getElementById("link-whatsapp").style.display = "block";
+            abrirMenu();
+        }
+
+        function abrirMenu() {
+            var x = document.getElementById("menu-desplegable");
+            x.style.display = "block";
+            window.scrollTo({ top: x.offsetTop, behavior: 'smooth' });
         }
     </script>
 </body>
