@@ -29,6 +29,20 @@ h1{margin:8px 0 0 0;font-size:26px}
 select,input{width:100%;padding:10px;border-radius:6px;border:none;margin:8px 0}
 .summary{background:#222;border-radius:8px;padding:10px;margin-top:10px}
 .hidden{display:none}
+.size-buttons{
+display:flex;
+gap:6px;
+padding:10px;
+}
+
+.size-buttons button{
+flex:1;
+background:#ff3b3b;
+border:none;
+padding:8px;
+color:white;
+border-radius:6px;
+cursor:pointer;}
 </style>
 </head>
 
@@ -85,25 +99,86 @@ Para pedidos a domicilio envíanos tu ubicación por WhatsApp para cotizar el en
 </div>
 
 <!-- PIZZAS -->
+
 <div id="pizzas" class="section">
 <h2>Pizzas</h2>
+
 <div class="grid">
-<div class="card"><img src="marguerita.jpg"><div class="name">Marguerita</div><button onclick="agregarPizza('Marguerita')">Agregar</button></div>
-<div class="card"><img src="valentina.jpg"><div class="name">Valentina</div><button onclick="agregarPizza('Valentina')">Agregar</button></div>
-<div class="card"><img src="lucrecia.jpg"><div class="name">Lucrecia</div><button onclick="agregarPizza('Lucrecia')">Agregar</button></div>
-<div class="card"><img src="alessia.jpg"><div class="name">Alessia</div><button onclick="agregarPizza('Alessia')">Agregar</button></div>
-<div class="card"><img src="adriana.jpg"><div class="name">Adriana</div><button onclick="agregarPizza('Adriana')">Agregar</button></div>
-<div class="card"><img src="kalena.jpg"><div class="name">Kalena</div><button onclick="agregarPizza('Kalena')">Agregar</button></div>
-<div class="card"><img src="leilani.jpg"><div class="name">Leilani</div><button onclick="agregarPizza('Leilani')">Agregar</button></div>
-<div class="card"><img src="olivia.jpg"><div class="name">Olivia</div><button onclick="agregarPizza('Olivia')">Agregar</button></div>
-<div class="card"><img src="bianca.jpg"><div class="name">Bianca</div><button onclick="agregarPizza('Bianca')">Agregar</button></div>
-<div class="card"><img src="francesca.jpg"><div class="name">Francesca</div><button onclick="agregarPizza('Francesca')">Agregar</button></div>
-<div class="card"><img src="sofia.jpg"><div class="name">Sofia</div><button onclick="agregarPizza('Sofia')">Agregar</button></div>
-<div class="card"><img src="amalia.jpg"><div class="name">Amalia</div><button onclick="agregarPizza('Amalia')">Agregar</button></div>
-<div class="card"><img src="marietta.jpg"><div class="name">Marietta</div><button onclick="agregarPizza('Marietta')">Agregar</button></div>
-</div>
+
+<div class="card">
+<img src="marguerita.jpg">
+<div class="name">Marguerita</div>
+
+<div class="size-buttons">
+<button onclick="agregar('Marguerita Individual')">Individual</button>
+<button onclick="agregar('Marguerita Grande')">Grande</button>
 </div>
 
+</div>
+
+
+<div class="card">
+<img src="valentina.jpg">
+<div class="name">Valentina</div>
+
+<div class="size-buttons">
+<button onclick="agregar('Valentina Individual')">Individual</button>
+<button onclick="agregar('Valentina Grande')">Grande</button>
+</div>
+
+</div>
+
+
+<div class="card">
+<img src="francesca.jpg">
+<div class="name">Francesca</div>
+
+<div class="size-buttons">
+<button onclick="agregar('Francesca Individual')">Individual</button>
+<button onclick="agregar('Francesca Grande')">Grande</button>
+</div>
+
+</div>
+
+
+<div class="card">
+<img src="sofia.jpg">
+<div class="name">Sofia</div>
+
+<div class="size-buttons">
+<button onclick="agregar('Sofia Individual')">Individual</button>
+<button onclick="agregar('Sofia Grande')">Grande</button>
+</div>
+
+</div>
+
+
+<div class="card">
+<img src="amalia.jpg">
+<div class="name">Amalia</div>
+
+<div class="size-buttons">
+<button onclick="agregar('Amalia Individual')">Individual</button>
+<button onclick="agregar('Amalia Grande')">Grande</button>
+</div>
+
+</div>
+
+
+<div class="card">
+<img src="marietta.jpg">
+<div class="name">Marietta</div>
+
+<div class="size-buttons">
+<button onclick="agregar('Marietta Individual')">Individual</button>
+<button onclick="agregar('Marietta Grande')">Grande</button>
+</div>
+
+</div>
+
+</div>
+</div>
+  
 <!-- PASTAS -->
 <div id="pastas" class="section">
 <h2>Pastas</h2>
@@ -211,3 +286,4 @@ window.open(`https://wa.me/${telefono}?text=${texto}`)
 
 </body>
 </html>
+
