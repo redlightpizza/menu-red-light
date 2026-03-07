@@ -1,329 +1,48 @@
 <!DOCTYPE html>
 <html lang="es">
-
 <head>
-<meta charset="UTF-8">
-<title>Red Light Pizza</title>
-
-<style>
-
-body{
-font-family:Arial;
-background:#111;
-color:white;
-text-align:center;
-margin:0;
-}
-
-header{
-padding:20px;
-}
-
-.logo{
-width:160px;
-}
-
-button{
-background:#ff3b3b;
-border:none;
-color:white;
-padding:10px 15px;
-margin:5px;
-border-radius:8px;
-cursor:pointer;
-}
-
-.menu{
-max-width:900px;
-margin:auto;
-padding:20px;
-}
-
-.grid{
-display:grid;
-grid-template-columns:repeat(auto-fit,minmax(200px,1fr));
-gap:15px;
-}
-
-.card{
-background:#222;
-border-radius:12px;
-padding:10px;
-}
-
-.card img{
-width:100%;
-border-radius:10px;
-}
-
-.salsas{
-display:flex;
-justify-content:center;
-flex-wrap:wrap;
-gap:10px;
-}
-
-.salsa{
-background:#333;
-padding:10px;
-border-radius:10px;
-cursor:pointer;
-}
-
-.salsa img{
-width:35px;
-}
-
-#pedido{
-background:#222;
-padding:15px;
-margin:20px;
-border-radius:12px;
-}
-
-#menu{
-display:none;
-}
-
-</style>
-
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Red Light Pizza - MenÃº</title>
+    <style>
+        body { background-color: #000; color: #fff; font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; margin: 0; padding: 20px; text-align: center; }
+        .logo { color: #ff0000; font-size: 2.5rem; font-weight: bold; text-transform: uppercase; margin-bottom: 10px; }
+        .btn-container { display: flex; flex-direction: column; gap: 15px; margin-top: 30px; }
+        .btn { background-color: #ff0000; color: white; border: none; padding: 15px; font-size: 1.1rem; border-radius: 8px; cursor: pointer; text-decoration: none; font-weight: bold; }
+        #menu-content { display: none; margin-top: 30px; text-align: left; }
+        .item { border-bottom: 1px solid #333; padding: 10px 0; display: flex; justify-content: space-between; }
+        .item-name { color: #ff0000; font-weight: bold; }
+        h2 { border-bottom: 2px solid #ff0000; padding-bottom: 5px; margin-top: 25px; }
+    </style>
 </head>
-
 <body>
 
-<header>
-
-<img src="logo.png" class="logo">
-
-<h1>Red Light Pizza</h1>
-
-</header>
-
-<div id="inicio">
-
-<h2>Bienvenido</h2>
-
-<p>Selecciona cómo quieres tu pedido</p>
-
-<button onclick="tipoPedido('Restaurante')">
-Consumir en restaurante
-</button>
-
-<button onclick="tipoPedido('Domicilio')">
-Domicilio / recoger
-</button>
-
-<p>
-Si eliges domicilio deberás enviar tu ubicación por WhatsApp
-para cotizar el envío.
-</p>
-
-</div>
-
-<div id="menu" class="menu">
-
-<h2>Pizzas</h2>
-
-<div class="grid">
-
-<div class="card">
-
-<img src="pizza1.jpg">
-
-<h3>Marguerita</h3>
-
-<button onclick="pizza('Marguerita')">Seleccionar</button>
-
-</div>
-
-<div class="card">
-
-<img src="pizza2.jpg">
-
-<h3>Valentina</h3>
-
-<button onclick="pizza('Valentina')">Seleccionar</button>
-
-</div>
-
-<div class="card">
-
-<img src="pizza3.jpg">
-
-<h3>Francesca</h3>
-
-<button onclick="pizza('Francesca')">Seleccionar</button>
-
-</div>
-
-</div>
-
-<h2>Pastas</h2>
-
-<div class="grid">
-
-<div class="card">
-
-<img src="pasta1.jpg">
-
-<h3>Pasta Pomodoro</h3>
-
-<button onclick="pasta('Pomodoro')">Seleccionar</button>
-
-</div>
-
-<div class="card">
-
-<img src="pasta2.jpg">
-
-<h3>Pasta Alfredo</h3>
-
-<button onclick="pasta('Alfredo')">Seleccionar</button>
-
-</div>
-
-</div>
-
-<h2>Salsas</h2>
-
-<div class="salsas">
-
-<div class="salsa" onclick="agregarSalsa('Ranch')">
-<img src="https://cdn-icons-png.flaticon.com/512/1046/1046784.png">
-<p>Ranch</p>
-</div>
-
-<div class="salsa" onclick="agregarSalsa('BBQ')">
-<img src="https://cdn-icons-png.flaticon.com/512/3075/3075977.png">
-<p>BBQ</p>
-</div>
-
-<div class="salsa" onclick="agregarSalsa('Buffalo')">
-<img src="https://cdn-icons-png.flaticon.com/512/135/135620.png">
-<p>Buffalo</p>
-</div>
-
-</div>
-
-<div id="pedido">
-
-<h3>Tu pedido</h3>
-
-<div id="lista"></div>
-
-<button onclick="enviar()">Enviar pedido</button>
-
-</div>
-
-</div>
-
-<script>
-
-let tipo=""
-let pedido=[]
-let salsas=[]
-
-function tipoPedido(opcion){
-
-tipo=opcion
-
-document.getElementById("inicio").style.display="none"
-document.getElementById("menu").style.display="block"
-
-}
-
-function pizza(nombre){
-
-let tamaño=prompt("Tamaño: 1 Individual / 2 Grande")
-
-let queso=prompt("¿Queso extra? 1 No / 2 Sí")
-
-let texto="Pizza "+nombre
-
-if(tamaño==1) texto+=" (Individual)"
-if(tamaño==2) texto+=" (Grande)"
-
-if(queso==2) texto+=" + queso extra"
-
-pedido.push(texto)
-
-mostrar()
-
-}
-
-function pasta(nombre){
-
-let proteina=prompt("¿Agregar proteína? 1 No / 2 Chicken Tenders")
-
-let texto="Pasta "+nombre
-
-if(proteina==2) texto+=" + Chicken Tenders"
-
-pedido.push(texto)
-
-mostrar()
-
-}
-
-function agregarSalsa(nombre){
-
-salsas.push(nombre)
-
-mostrar()
-
-}
-
-function mostrar(){
-
-let lista=""
-
-pedido.forEach(p=>{
-
-lista+="<p>"+p+"</p>"
-
-})
-
-if(salsas.length>0){
-
-lista+="<p>Salsas: "+salsas.join(", ")+"</p>"
-
-}
-
-document.getElementById("lista").innerHTML=lista
-
-}
-
-function enviar(){
-
-let texto="Pedido Red Light Pizza %0A"
-
-texto+="Tipo: "+tipo+"%0A%0A"
-
-pedido.forEach(p=>{
-
-texto+="- "+p+"%0A"
-
-})
-
-if(salsas.length>0){
-
-texto+="Salsas: "+salsas.join(", ")+"%0A"
-
-}
-
-if(tipo=="Domicilio"){
-
-texto+="Enviar ubicación para cotizar envío."
-
-}
-
-let url="https://wa.me/529511108841?text="+texto
-
-window.open(url)
-
-}
-
-</script>
-
+    <div class="logo">Red Light Pizza</div>
+    <p>Selecciona cÃ³mo quieres tu pedido:</p>
+
+    <div class="btn-container">
+        <button class="btn" onclick="mostrarMenu()">Consumir en restaurante</button>
+        <a href="https://wa.me/tu_numero_aqui" class="btn">Domicilio / Recoger</a>
+    </div>
+
+    <div id="menu-content">
+        <h2>Pizzas Especiales</h2>
+        <div class="item"><span class="item-name">Francesca</span> <span>$---</span></div>
+        <div class="item"><span class="item-name">Amalia</span> <span>$---</span></div>
+        
+        <h2>Entradas</h2>
+        <div class="item"><span class="item-name">Papas Gajo</span> <span>$---</span></div>
+        
+        <h2>Bebidas</h2>
+        <div class="item"><span class="item-name">Cerveza Nacional</span> <span>$---</span></div>
+        <div class="item"><span class="item-name">Artesanales</span> <span>$---</span></div>
+    </div>
+
+    <script>
+        function mostrarMenu() {
+            document.getElementById('menu-content').style.display = 'block';
+            window.scrollTo({ top: document.body.scrollHeight, behavior: 'smooth' });
+        }
+    </script>
 </body>
 </html>
