@@ -1,9 +1,9 @@
-
 <!DOCTYPE html>
 <html>
 <head>
+
 <meta charset="UTF-8">
-<title>Red Light Pizza</title>
+<title>🍕 Red Light Pizza</title>
 
 <style>
 
@@ -12,11 +12,18 @@ font-family:Arial;
 margin:0;
 padding:20px;
 padding-bottom:90px;
-background:#f5f5f5;
+background:#000;
+color:white;
 }
 
 h1{
 text-align:center;
+color:#ff2b2b;
+}
+
+h2{
+color:#ff2b2b;
+margin-top:40px;
 }
 
 .menu{
@@ -25,10 +32,10 @@ margin:auto;
 }
 
 .producto{
-background:white;
-border:1px solid #ddd;
+background:#111;
+border:1px solid #ff2b2b;
 border-radius:10px;
-padding:12px;
+padding:14px;
 margin:12px 0;
 }
 
@@ -39,12 +46,15 @@ font-weight:bold;
 
 .desc{
 font-size:14px;
-color:#555;
+color:#ccc;
 margin:6px 0;
 }
 
 select{
-margin-top:5px;
+background:#000;
+color:white;
+border:1px solid #ff2b2b;
+margin-top:6px;
 }
 
 .contador{
@@ -55,18 +65,22 @@ margin-top:8px;
 }
 
 .contador button{
-width:32px;
-height:32px;
+width:34px;
+height:34px;
 font-size:18px;
+background:#ff2b2b;
+border:none;
+color:white;
+border-radius:6px;
 cursor:pointer;
 }
 
 #carrito{
 margin-top:30px;
-background:white;
+background:#111;
 padding:15px;
 border-radius:10px;
-border:1px solid #ddd;
+border:1px solid #ff2b2b;
 }
 
 #carritoBar{
@@ -76,8 +90,7 @@ bottom:0;
 left:0;
 width:100%;
 
-background:#111;
-color:white;
+background:#000;
 
 display:flex;
 justify-content:space-between;
@@ -85,23 +98,30 @@ align-items:center;
 
 padding:12px 18px;
 
-box-shadow:0 -2px 8px rgba(0,0,0,0.3);
+border-top:2px solid #ff2b2b;
 
 }
 
 #btnPedido{
 
-background:#ff3b3b;
+background:#ff2b2b;
 border:none;
 color:white;
 
 padding:10px 20px;
+
 font-size:16px;
 
 border-radius:6px;
 
 cursor:pointer;
 
+}
+
+input{
+padding:8px;
+margin-top:10px;
+width:100%;
 }
 
 </style>
@@ -111,16 +131,17 @@ cursor:pointer;
 
 <body>
 
-<h1>Red Light Pizza</h1>
+<h1>🍕 Red Light Pizza</h1>
 
 <div class="menu">
 
-<h2>Pizzas</h2>
+<h2>🍕 Pizzas</h2>
 
 
+<!-- MARGUERITA -->
 <div class="producto">
 
-<div class="nombre">Marguerita</div>
+<div class="nombre">🍕 Marguerita</div>
 
 <div class="desc">
 Mezcla de quesos cremosos, albahaca italiana y aceite de oliva.
@@ -140,9 +161,10 @@ Mezcla de quesos cremosos, albahaca italiana y aceite de oliva.
 </div>
 
 
+<!-- VALENTINA -->
 <div class="producto">
 
-<div class="nombre">Valentina</div>
+<div class="nombre">🍕 Valentina</div>
 
 <div class="desc">
 Mezcla de quesos cremosos, peperoni y orégano.
@@ -162,12 +184,174 @@ Mezcla de quesos cremosos, peperoni y orégano.
 </div>
 
 
+<!-- LUCRECIA -->
 <div class="producto">
 
-<div class="nombre">Francesca</div>
+<div class="nombre">🍕 Lucrecia</div>
 
 <div class="desc">
-Mezcla de quesos, peperoni, salchicha italiana, aceitunas negras, pimiento, cebolla morada y albahaca fresca.
+Champiñón, Portobello, infusión de tomillo y pesto de albahaca.
+</div>
+
+<select id="tamano-Lucrecia">
+<option value="Individual">Individual</option>
+<option value="Grande">Grande</option>
+</select>
+
+<div class="contador">
+<button onclick="restar('Lucrecia')">−</button>
+<span id="cant-Lucrecia">0</span>
+<button onclick="sumar('Lucrecia')">+</button>
+</div>
+
+</div>
+
+
+<!-- ALESSIA -->
+<div class="producto">
+
+<div class="nombre">🍕 Alessia</div>
+
+<div class="desc">
+Salchicha italiana, cebolla morada y jalapeño.
+</div>
+
+<select id="tamano-Alessia">
+<option value="Individual">Individual</option>
+<option value="Grande">Grande</option>
+</select>
+
+<div class="contador">
+<button onclick="restar('Alessia')">−</button>
+<span id="cant-Alessia">0</span>
+<button onclick="sumar('Alessia')">+</button>
+</div>
+
+</div>
+
+
+<!-- ADRIANA -->
+<div class="producto">
+
+<div class="nombre">🍕 Adriana</div>
+
+<div class="desc">
+Mezcla de quesos, jamón york, champiñones, aceitunas negras y hierbas finas.
+</div>
+
+<select id="tamano-Adriana">
+<option value="Individual">Individual</option>
+<option value="Grande">Grande</option>
+</select>
+
+<div class="contador">
+<button onclick="restar('Adriana')">−</button>
+<span id="cant-Adriana">0</span>
+<button onclick="sumar('Adriana')">+</button>
+</div>
+
+</div>
+
+
+<!-- KALENA -->
+<div class="producto">
+
+<div class="nombre">🍕 Kalena</div>
+
+<div class="desc">
+Mezcla de quesos, tocino, piña y salsa BBQ.
+</div>
+
+<select id="tamano-Kalena">
+<option value="Individual">Individual</option>
+<option value="Grande">Grande</option>
+</select>
+
+<div class="contador">
+<button onclick="restar('Kalena')">−</button>
+<span id="cant-Kalena">0</span>
+<button onclick="sumar('Kalena')">+</button>
+</div>
+
+</div>
+
+
+<!-- LEILANI -->
+<div class="producto">
+
+<div class="nombre">🍕 Leilani</div>
+
+<div class="desc">
+Mezcla de quesos, jamón York y piña.
+</div>
+
+<select id="tamano-Leilani">
+<option value="Individual">Individual</option>
+<option value="Grande">Grande</option>
+</select>
+
+<div class="contador">
+<button onclick="restar('Leilani')">−</button>
+<span id="cant-Leilani">0</span>
+<button onclick="sumar('Leilani')">+</button>
+</div>
+
+</div>
+
+
+<!-- OLIVIA -->
+<div class="producto">
+
+<div class="nombre">🍕 Olivia</div>
+
+<div class="desc">
+Mezcla de quesos, espinaca, tocino y champiñón.
+</div>
+
+<select id="tamano-Olivia">
+<option value="Individual">Individual</option>
+<option value="Grande">Grande</option>
+</select>
+
+<div class="contador">
+<button onclick="restar('Olivia')">−</button>
+<span id="cant-Olivia">0</span>
+<button onclick="sumar('Olivia')">+</button>
+</div>
+
+</div>
+
+
+<!-- BIANCA -->
+<div class="producto">
+
+<div class="nombre">🍕 Bianca</div>
+
+<div class="desc">
+Queso mozzarella, queso Port, queso Azul y queso parmesano.
+</div>
+
+<select id="tamano-Bianca">
+<option value="Individual">Individual</option>
+<option value="Grande">Grande</option>
+</select>
+
+<div class="contador">
+<button onclick="restar('Bianca')">−</button>
+<span id="cant-Bianca">0</span>
+<button onclick="sumar('Bianca')">+</button>
+</div>
+
+</div>
+
+
+<!-- FRANCESCA -->
+<div class="producto">
+
+<div class="nombre">🍕 Francesca</div>
+
+<div class="desc">
+Mezcla de quesos, peperoni, salchicha italiana hecha en casa, aceitunas negras, pimiento cebolla morada y albahaca fresca.
 </div>
 
 <select id="tamano-Francesca">
@@ -184,13 +368,11 @@ Mezcla de quesos, peperoni, salchicha italiana, aceitunas negras, pimiento, cebo
 </div>
 
 
-
-<h2>Pastas</h2>
-
+<h2>🍝 Pastas</h2>
 
 <div class="producto">
 
-<div class="nombre">Pasta Pomodoro</div>
+<div class="nombre">🍝 Pasta Pomodoro</div>
 
 <div class="desc">
 Salsa de tomate fresco con orégano, tomates cherrys, albahaca y queso parmesano.
@@ -207,7 +389,7 @@ Salsa de tomate fresco con orégano, tomates cherrys, albahaca y queso parmesano
 
 <div class="producto">
 
-<div class="nombre">Pasta Alfredo</div>
+<div class="nombre">🍝 Pasta Alfredo</div>
 
 <div class="desc">
 Salsa Alfredo con ajo rostizado, mantequilla y queso parmesano.
@@ -224,7 +406,7 @@ Salsa Alfredo con ajo rostizado, mantequilla y queso parmesano.
 
 <div class="producto">
 
-<div class="nombre">Pasta Aurora</div>
+<div class="nombre">🍝 Pasta Aurora</div>
 
 <div class="desc">
 Salsa Alfredo con salsa pomodoro, tomates cherrys, albahaca y queso parmesano.
@@ -239,15 +421,13 @@ Salsa Alfredo con salsa pomodoro, tomates cherrys, albahaca y queso parmesano.
 </div>
 
 
-
-<h2>Carrito</h2>
+<h2>🛒 Carrito</h2>
 
 <div id="carrito"></div>
 
 <input id="nombre" placeholder="Tu nombre">
 
 </div>
-
 
 
 <div id="carritoBar">
@@ -261,7 +441,6 @@ Enviar pedido
 </button>
 
 </div>
-
 
 
 <script>
@@ -350,7 +529,7 @@ texto+="Nombre: "+nombre+"%0A"
 
 texto+="Productos: "+lista.join(", ")
 
-let url="https://wa.me/TUNUMERO?text="+texto
+let url="https://wa.me/529515813970?text="+texto
 
 window.open(url)
 
@@ -360,5 +539,3 @@ window.open(url)
 
 </body>
 </html>
-
-
