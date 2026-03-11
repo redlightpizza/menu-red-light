@@ -1,10 +1,8 @@
 <!DOCTYPE html>
 <html>
-
 <head>
 
 <meta charset="UTF-8">
-
 <title>🍕 Red Light Pizza</title>
 
 <style>
@@ -23,14 +21,35 @@ text-align:center;
 color:#ff2b2b;
 }
 
-h2{
-color:#ff2b2b;
-margin-top:40px;
-}
-
 .menu{
 max-width:700px;
 margin:auto;
+}
+
+/* BOTONES CATEGORIAS */
+
+#categorias{
+display:flex;
+gap:10px;
+flex-wrap:wrap;
+margin-bottom:20px;
+}
+
+#categorias button{
+background:#ff2b2b;
+border:none;
+color:white;
+padding:10px 16px;
+border-radius:20px;
+cursor:pointer;
+font-size:15px;
+}
+
+/* MENUS */
+
+.categoriaMenu{
+display:none;
+margin-bottom:25px;
 }
 
 .producto{
@@ -77,6 +96,8 @@ border-radius:6px;
 cursor:pointer;
 }
 
+/* CARRITO */
+
 #carrito{
 margin-top:20px;
 background:#111;
@@ -114,40 +135,6 @@ margin-top:10px;
 width:100%;
 }
 
-/* CATEGORIAS */
-
-#categorias{
-
-display:flex;
-gap:10px;
-overflow-x:auto;
-
-position:sticky;
-top:0;
-
-background:#000;
-padding:10px 0;
-
-z-index:10;
-
-}
-
-#categorias a{
-
-text-decoration:none;
-background:#ff2b2b;
-color:white;
-
-padding:8px 14px;
-
-border-radius:20px;
-
-font-size:14px;
-
-white-space:nowrap;
-
-}
-
 </style>
 
 </head>
@@ -157,23 +144,24 @@ white-space:nowrap;
 
 <h1>🍕 Red Light Pizza</h1>
 
+<div class="menu">
+
 <div id="categorias">
 
-<a href="#pizzas">🍕 Pizzas</a>
-<a href="#entradas">🥗 Entradas</a>
-<a href="#pastas">🍝 Pastas</a>
-<a href="#carritoTitulo">🛒 Carrito</a>
+<button onclick="toggleMenu('pizzas')">🍕 Pizzas</button>
+<button onclick="toggleMenu('entradas')">🥗 Entradas</button>
+<button onclick="toggleMenu('pastas')">🍝 Pastas</button>
+<button onclick="toggleMenu('bebidas')">🥤 Bebidas</button>
 
 </div>
 
-<div class="menu">
 
-<h2 id="pizzas">🍕 Pizzas</h2>
+<!-- PIZZAS -->
 
+<div id="pizzas" class="categoriaMenu">
 
-<!-- MARGUERITA -->
 <div class="producto">
-<div class="nombre">🍕 Marguerita</div>
+<div class="nombre">Marguerita</div>
 <div class="desc">Mezcla de quesos cremosos, albahaca italiana y aceite de oliva.</div>
 
 <select id="tamano-Marguerita">
@@ -189,9 +177,8 @@ white-space:nowrap;
 </div>
 
 
-<!-- VALENTINA -->
 <div class="producto">
-<div class="nombre">🍕 Valentina</div>
+<div class="nombre">Valentina</div>
 <div class="desc">Mezcla de quesos cremosos, peperoni y orégano.</div>
 
 <select id="tamano-Valentina">
@@ -207,9 +194,8 @@ white-space:nowrap;
 </div>
 
 
-<!-- LUCRECIA -->
 <div class="producto">
-<div class="nombre">🍕 Lucrecia</div>
+<div class="nombre">Lucrecia</div>
 <div class="desc">Champiñón, Portobello, infusión de tomillo y pesto de albahaca.</div>
 
 <select id="tamano-Lucrecia">
@@ -225,9 +211,8 @@ white-space:nowrap;
 </div>
 
 
-<!-- ALESSIA -->
 <div class="producto">
-<div class="nombre">🍕 Alessia</div>
+<div class="nombre">Alessia</div>
 <div class="desc">Salchicha italiana, cebolla morada y jalapeño.</div>
 
 <select id="tamano-Alessia">
@@ -243,9 +228,8 @@ white-space:nowrap;
 </div>
 
 
-<!-- ADRIANA -->
 <div class="producto">
-<div class="nombre">🍕 Adriana</div>
+<div class="nombre">Adriana</div>
 <div class="desc">Mezcla de quesos, jamón york, champiñones, aceitunas negras y hierbas finas.</div>
 
 <select id="tamano-Adriana">
@@ -261,9 +245,8 @@ white-space:nowrap;
 </div>
 
 
-<!-- KALENA -->
 <div class="producto">
-<div class="nombre">🍕 Kalena</div>
+<div class="nombre">Kalena</div>
 <div class="desc">Mezcla de quesos, tocino, piña y salsa BBQ.</div>
 
 <select id="tamano-Kalena">
@@ -279,83 +262,16 @@ white-space:nowrap;
 </div>
 
 
-<!-- LEILANI -->
-<div class="producto">
-<div class="nombre">🍕 Leilani</div>
-<div class="desc">Mezcla de quesos, jamón York y piña.</div>
-
-<select id="tamano-Leilani">
-<option value="Individual">Individual</option>
-<option value="Grande">Grande</option>
-</select>
-
-<div class="contador">
-<button onclick="restar('Leilani')">−</button>
-<span id="cant-Leilani">0</span>
-<button onclick="sumar('Leilani')">+</button>
-</div>
 </div>
 
 
-<!-- OLIVIA -->
-<div class="producto">
-<div class="nombre">🍕 Olivia</div>
-<div class="desc">Mezcla de quesos, espinaca, tocino y champiñón.</div>
+<!-- ENTRADAS -->
 
-<select id="tamano-Olivia">
-<option value="Individual">Individual</option>
-<option value="Grande">Grande</option>
-</select>
-
-<div class="contador">
-<button onclick="restar('Olivia')">−</button>
-<span id="cant-Olivia">0</span>
-<button onclick="sumar('Olivia')">+</button>
-</div>
-</div>
-
-
-<!-- BIANCA -->
-<div class="producto">
-<div class="nombre">🍕 Bianca</div>
-<div class="desc">Queso mozzarella, queso Port, queso Azul y queso parmesano.</div>
-
-<select id="tamano-Bianca">
-<option value="Individual">Individual</option>
-<option value="Grande">Grande</option>
-</select>
-
-<div class="contador">
-<button onclick="restar('Bianca')">−</button>
-<span id="cant-Bianca">0</span>
-<button onclick="sumar('Bianca')">+</button>
-</div>
-</div>
-
-
-<!-- FRANCESCA -->
-<div class="producto">
-<div class="nombre">🍕 Francesca</div>
-<div class="desc">Mezcla de quesos, peperoni, salchicha italiana hecha en casa, aceitunas negras, pimiento, cebolla morada y albahaca fresca.</div>
-
-<select id="tamano-Francesca">
-<option value="Individual">Individual</option>
-<option value="Grande">Grande</option>
-</select>
-
-<div class="contador">
-<button onclick="restar('Francesca')">−</button>
-<span id="cant-Francesca">0</span>
-<button onclick="sumar('Francesca')">+</button>
-</div>
-</div>
-
-
-<h2 id="entradas">🥗 Entradas</h2>
+<div id="entradas" class="categoriaMenu">
 
 <div class="producto">
-<div class="nombre">🥗 Ensalada Italiana</div>
-<div class="desc">Lechuga fresca, tomates cherry, aceitunas negras y queso parmesano.</div>
+<div class="nombre">Ensalada Italiana</div>
+<div class="desc">Lechuga fresca, tomates cherry, aceitunas negras y parmesano.</div>
 
 <div class="contador">
 <button onclick="restar('Ensalada Italiana')">−</button>
@@ -364,12 +280,16 @@ white-space:nowrap;
 </div>
 </div>
 
+</div>
 
-<h2 id="pastas">🍝 Pastas</h2>
+
+<!-- PASTAS -->
+
+<div id="pastas" class="categoriaMenu">
 
 <div class="producto">
-<div class="nombre">🍝 Pasta Pomodoro</div>
-<div class="desc">Salsa de tomate fresco con orégano, tomates cherrys, albahaca y queso parmesano.</div>
+<div class="nombre">Pasta Pomodoro</div>
+<div class="desc">Salsa de tomate fresco, albahaca y parmesano.</div>
 
 <div class="contador">
 <button onclick="restar('Pasta Pomodoro')">−</button>
@@ -380,8 +300,8 @@ white-space:nowrap;
 
 
 <div class="producto">
-<div class="nombre">🍝 Pasta Alfredo</div>
-<div class="desc">Salsa Alfredo con ajo rostizado, mantequilla y queso parmesano.</div>
+<div class="nombre">Pasta Alfredo</div>
+<div class="desc">Salsa Alfredo con mantequilla, ajo rostizado y parmesano.</div>
 
 <div class="contador">
 <button onclick="restar('Pasta Alfredo')">−</button>
@@ -392,8 +312,8 @@ white-space:nowrap;
 
 
 <div class="producto">
-<div class="nombre">🍝 Pasta Aurora</div>
-<div class="desc">Salsa Alfredo con salsa pomodoro, tomates cherrys, albahaca y queso parmesano.</div>
+<div class="nombre">Pasta Aurora</div>
+<div class="desc">Salsa Alfredo mezclada con Pomodoro y parmesano.</div>
 
 <div class="contador">
 <button onclick="restar('Pasta Aurora')">−</button>
@@ -402,8 +322,28 @@ white-space:nowrap;
 </div>
 </div>
 
+</div>
 
-<h2 id="carritoTitulo">🛒 Carrito</h2>
+
+<!-- BEBIDAS -->
+
+<div id="bebidas" class="categoriaMenu">
+
+<div class="producto">
+<div class="nombre">Té Negro</div>
+
+<div class="contador">
+<button onclick="restar('Te Negro')">−</button>
+<span id="cant-Te Negro">0</span>
+<button onclick="sumar('Te Negro')">+</button>
+</div>
+
+</div>
+
+</div>
+
+
+<h2>🛒 Carrito</h2>
 
 <div id="carrito"></div>
 
@@ -428,6 +368,18 @@ Enviar pedido
 <script>
 
 let carrito={}
+
+function toggleMenu(id){
+
+let menu=document.getElementById(id)
+
+if(menu.style.display==="block"){
+menu.style.display="none"
+}else{
+menu.style.display="block"
+}
+
+}
 
 function sumar(nombre){
 
@@ -497,15 +449,11 @@ let nombre=document.getElementById("nombre").value
 let lista=[]
 
 for(let p in carrito){
-
 lista.push(p+" x"+carrito[p])
-
 }
 
 let texto="Pedido Red Light Pizza%0A"
-
 texto+="Nombre: "+nombre+"%0A"
-
 texto+="Productos: "+lista.join(", ")
 
 let url="https://wa.me/529515813970?text="+texto
@@ -517,5 +465,4 @@ window.open(url)
 </script>
 
 </body>
-
-</html>
+  </html>
