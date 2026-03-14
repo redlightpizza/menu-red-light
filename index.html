@@ -1,8 +1,10 @@
 <!DOCTYPE html>
 <html lang="es">
 <head>
+
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
 <title>Red Light Pizza</title>
 
 <style>
@@ -11,65 +13,58 @@ body{
 font-family:Arial;
 margin:0;
 background:#000;
-color:#fff;
+color:white;
 text-align:center;
-}
-
-.logo{
-width:120px;
-margin-top:20px;
 }
 
 h1{
 color:#ff2a2a;
-margin:10px;
+}
+
+button{
+padding:10px;
+margin:6px;
+border:none;
+border-radius:10px;
+background:#ff2a2a;
+color:white;
+font-size:16px;
 }
 
 .botones{
 margin:15px;
 }
 
-button{
-padding:10px;
-margin:5px;
-border:none;
-border-radius:8px;
-background:#ff2a2a;
-color:white;
-font-size:15px;
-}
-
-.categoriaMenu{
-display:none;
-padding:10px;
-}
-
 .producto{
 background:#111;
-padding:12px;
-margin:10px;
-border-radius:10px;
+margin:12px;
+padding:15px;
+border-radius:12px;
 }
 
 .desc{
 font-size:13px;
 color:#bbb;
-margin:4px 0;
-}
-
-.contador{
-margin-top:6px;
+margin:6px;
 }
 
 .contador button{
-width:30px;
+width:35px;
+height:35px;
+font-size:18px;
 }
 
-.enviar{
-margin:20px;
-padding:15px;
-font-size:18px;
-background:#25D366;
+.categoria{
+display:none;
+}
+
+#carrito{
+position:fixed;
+top:10px;
+right:10px;
+background:#ff2a2a;
+padding:10px;
+border-radius:10px;
 }
 
 </style>
@@ -77,212 +72,220 @@ background:#25D366;
 </head>
 
 <body>
-  
-<div id="idioma" style="margin-top:100px">
-<h2>Choose language / Elija idioma</h2>
-<button onclick="iniciarMenu()">Español</button>
-<button onclick="iniciarMenu()">English</button>
+
+<div id="idioma">
+
+<h1>🍕 Red Light Pizza</h1>
+
+<h2>Elige tu idioma / Choose your language</h2>
+
+<button onclick="iniciarMenu()">Español 🇲🇽</button>
+
+<button onclick="iniciarMenu()">English 🇺🇸</button>
+
 </div>
 
 <div id="menu" style="display:none">
 
+<div id="carrito">
 
-<img src="logo.png" class="logo">
+🛒 <span id="total">0</span>
 
-<h1>Red Light Pizza</h1>
+</div>
+
+<h1>🍕 Red Light Pizza</h1>
 
 <div class="botones">
 
-<button onclick="mostrar('entradas')">Entradas</button>
-<button onclick="mostrar('pastas')">Pastas</button>
-<button onclick="mostrar('pizzas')">Pizzas</button>
-<button onclick="mostrar('bebidas')">Bebidas</button>
+<button onclick="mostrar('entradas')">🍗 Entradas</button>
+<button onclick="mostrar('pastas')">🍝 Pastas</button>
+<button onclick="mostrar('pizzas')">🍕 Pizzas</button>
+<button onclick="mostrar('bebidas')">🥤 Bebidas</button>
 
 </div>
 
 <!-- ENTRADAS -->
 
-<div id="entradas" class="categoriaMenu">
+<div id="entradas" class="categoria">
 
 <div class="producto">
-Chicken Tenders
-<div class="desc">Trozos de pechuga asados al horno (BBQ, búfalo chipotle, búfalo siracha)</div>
+
+🍗 Chicken Tenders $200
+
+<div class="desc">
+Trozos de pechuga asados al horno (BBQ, búfalo chipotle, búfalo siracha)
+</div>
+
 <div class="contador">
 <button onclick="restar('tenders')">-</button>
 <span id="cant-tenders">0</span>
 <button onclick="sumar('tenders')">+</button>
 </div>
+
 </div>
 
 <div class="producto">
-Papas a la francesa
-<div class="desc">Aceite de oliva y aderezo ajo parmesano</div>
+
+🍟 Papas a la francesa $90
+
 <div class="contador">
 <button onclick="restar('francesa')">-</button>
 <span id="cant-francesa">0</span>
 <button onclick="sumar('francesa')">+</button>
 </div>
+
 </div>
 
 <div class="producto">
-Papas gajo
+
+🍟 Papas gajo $90
+
 <div class="contador">
 <button onclick="restar('gajo')">-</button>
 <span id="cant-gajo">0</span>
 <button onclick="sumar('gajo')">+</button>
 </div>
+
 </div>
 
 <div class="producto">
-Pan de ajo
+
+🧄 Pan de ajo $100
+
 <div class="contador">
 <button onclick="restar('panajo')">-</button>
 <span id="cant-panajo">0</span>
 <button onclick="sumar('panajo')">+</button>
 </div>
-</div>
 
-<div class="producto">
-Calzone de espinacas
-<div class="contador">
-<button onclick="restar('calzoneesp')">-</button>
-<span id="cant-calzoneesp">0</span>
-<button onclick="sumar('calzoneesp')">+</button>
-</div>
-</div>
-
-<div class="producto">
-Calzone 4 quesos
-<div class="contador">
-<button onclick="restar('calzone4')">-</button>
-<span id="cant-calzone4">0</span>
-<button onclick="sumar('calzone4')">+</button>
-</div>
-</div>
-
-<div class="producto">
-Calzone italiano
-<div class="contador">
-<button onclick="restar('calzoneit')">-</button>
-<span id="cant-calzoneit">0</span>
-<button onclick="sumar('calzoneit')">+</button>
-</div>
-</div>
-
-<div class="producto">
-Ensalada italiana
-<div class="contador">
-<button onclick="restar('ensital')">-</button>
-<span id="cant-ensital">0</span>
-<button onclick="sumar('ensital')">+</button>
-</div>
-</div>
-
-<div class="producto">
-Ensalada Cesare
-<div class="contador">
-<button onclick="restar('cesar')">-</button>
-<span id="cant-cesar">0</span>
-<button onclick="sumar('cesar')">+</button>
-</div>
 </div>
 
 </div>
 
 <!-- PASTAS -->
 
-<div id="pastas" class="categoriaMenu">
+<div id="pastas" class="categoria">
 
 <div class="producto">
-Pasta Pomodoro
+
+🍝 Pasta Pomodoro
+
 <div class="contador">
 <button onclick="restar('pomodoro')">-</button>
 <span id="cant-pomodoro">0</span>
 <button onclick="sumar('pomodoro')">+</button>
 </div>
+
 </div>
 
 <div class="producto">
-Pasta Alfredo
+
+🍝 Pasta Alfredo
+
 <div class="contador">
 <button onclick="restar('alfredo')">-</button>
 <span id="cant-alfredo">0</span>
 <button onclick="sumar('alfredo')">+</button>
 </div>
+
 </div>
 
 <div class="producto">
-Pasta Aurora
+
+🍝 Pasta Aurora
+
 <div class="contador">
 <button onclick="restar('aurora')">-</button>
 <span id="cant-aurora">0</span>
 <button onclick="sumar('aurora')">+</button>
 </div>
+
 </div>
 
 </div>
 
 <!-- PIZZAS -->
 
-<div id="pizzas" class="categoriaMenu"></div>
+<div id="pizzas" class="categoria"></div>
 
 <!-- BEBIDAS -->
 
-<div id="bebidas" class="categoriaMenu">
+<div id="bebidas" class="categoria">
 
-<div class="producto">Coca</div>
-<div class="producto">Coca light</div>
-<div class="producto">Sprite</div>
+<div class="producto">🥤 Coca</div>
+<div class="producto">🥤 Coca Light</div>
+<div class="producto">🥤 Sprite</div>
+<div class="producto">🍹 Schorle Felix</div>
 
-<div class="producto">Schorle (Felix)</div>
+<div class="producto">🍸 Bacardí con Coca 355ml</div>
+<div class="producto">🍹 Vicki Mango 473ml</div>
+<div class="producto">🍹 Vicki Chamoy 473ml</div>
 
-<div class="producto">Bacardí con Coca-Cola lata 355ml</div>
-<div class="producto">Vicki Mango lata 473ml</div>
-<div class="producto">Vicki chamoy lata 473ml</div>
+<div class="producto">🍺 Corona</div>
+<div class="producto">🍺 Victoria</div>
+<div class="producto">🍺 XX Lager</div>
+<div class="producto">🍺 Modelo</div>
 
-<div class="producto">Corona</div>
-<div class="producto">Victoria</div>
-<div class="producto">XX Lager lata</div>
-<div class="producto">Modelo lata</div>
-
-<div class="producto">Agua mineral</div>
-<div class="producto">Té negro</div>
+<div class="producto">💧 Agua mineral</div>
+<div class="producto">🍵 Té negro</div>
 
 </div>
 
-<button class="enviar" onclick="enviarPedido()">Enviar pedido</button>
+<button onclick="enviarPedido()">📲 Enviar pedido</button>
+
+</div>
 
 <script>
+
 function iniciarMenu(){
 
 document.getElementById("idioma").style.display="none"
+
 document.getElementById("menu").style.display="block"
 
 }
 
-function mostrar(id){
+function mostrar(cat){
 
-document.querySelectorAll(".categoriaMenu").forEach(c=>{
+document.querySelectorAll(".categoria").forEach(c=>{
 c.style.display="none"
 })
 
-document.getElementById(id).style.display="block"
+document.getElementById(cat).style.display="block"
+
+}
+
+function actualizarCarrito(){
+
+let total=0
+
+document.querySelectorAll("[id^='cant-']").forEach(e=>{
+total+=parseInt(e.innerText)
+})
+
+document.getElementById("total").innerText=total
 
 }
 
 function sumar(id){
 
 let span=document.getElementById("cant-"+id)
+
 span.innerText=parseInt(span.innerText)+1
+
+actualizarCarrito()
 
 }
 
 function restar(id){
 
 let span=document.getElementById("cant-"+id)
+
 let v=parseInt(span.innerText)
 
 if(v>0){span.innerText=v-1}
+
+actualizarCarrito()
 
 }
 
@@ -312,7 +315,7 @@ c.innerHTML+=`
 
 <div class="producto">
 
-${p} Individual
+🍕 ${p} Individual
 
 <div class="contador">
 <button onclick="restar('${p}i')">-</button>
@@ -321,17 +324,20 @@ ${p} Individual
 </div>
 
 <div class="contador">
-Extra queso $20
+
+🧀 Extra queso $20
+
 <button onclick="restar('${p}iq')">-</button>
 <span id="cant-${p}iq">0</span>
 <button onclick="sumar('${p}iq')">+</button>
+
 </div>
 
 </div>
 
 <div class="producto">
 
-${p} Grande
+🍕 ${p} Grande
 
 <div class="contador">
 <button onclick="restar('${p}g')">-</button>
@@ -340,10 +346,13 @@ ${p} Grande
 </div>
 
 <div class="contador">
-Extra queso $90
+
+🧀 Extra queso $90
+
 <button onclick="restar('${p}gq')">-</button>
 <span id="cant-${p}gq">0</span>
 <button onclick="sumar('${p}gq')">+</button>
+
 </div>
 
 </div>
@@ -358,14 +367,18 @@ cargarPizzas()
 
 function enviarPedido(){
 
-let texto="Pedido Red Light Pizza:%0A"
+let texto="Pedido Red Light Pizza:%0A%0A"
 
 document.querySelectorAll("[id^='cant-']").forEach(e=>{
 
-let n=parseInt(e.innerText)
+let cantidad=parseInt(e.innerText)
 
-if(n>0){
-texto+=e.id.replace("cant-","")+" x"+n+"%0A"
+if(cantidad>0){
+
+let nombre=e.id.replace("cant-","")
+
+texto+=nombre+" x"+cantidad+"%0A"
+
 }
 
 })
