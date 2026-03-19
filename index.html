@@ -87,8 +87,28 @@ border-radius:10px;
 
 <div id="menu" style="display:none">
 
-<div id="carrito">
+<div id="carrito" onclick="toggleCarrito()">
+🛒 <span id="total">0</span>
+</div>
+<div id="carritoDetalle" style="display:none; background:#111; padding:15px; position:fixed; top:60px; right:10px; width:250px; border-radius:10px;">
 
+<h3>🛒 Tu pedido</h3>
+
+<div id="listaPedido"></div>
+<div style="margin-top:10px">
+
+<p>¿Agregar algo más?</p>
+
+<button onclick="agregarExtra('Aderezo')">🧄 Aderezo $25</button>
+
+<button onclick="agregarExtra('Bebida')">🥤 Bebida</button>
+
+ </div>
+
+<button onclick="enviarPedido()">📲 Enviar pedido</button>
+
+</div>
+  
 🛒 <span id="total">0</span>
 
 </div>
@@ -236,6 +256,61 @@ Trozos de pechuga asados al horno (BBQ, búfalo chipotle, búfalo siracha)
 </div>
 
 <script>
+function agregarExtra(nombre){
+
+let id="extra-"+nombre
+
+if(!document.getElementById("cant-"+id)){
+
+let span=document.createElement("span")
+span.id="cant-"+id
+span.innerText=1
+span.style.display="none"
+
+document.body.appendChild(span)
+
+}else{
+
+let s=document.getElementById("cant-"+id)
+s.innerText=parseInt(s.innerText)+1
+
+}
+
+actualizarCarrito()
+actualizarLista()
+
+  }
+function toggleCarrito(){
+
+let c=document.getElementById("carritoDetalle")
+
+c.style.display = c.style.display=="none" ? "block" : "none"
+
+actualizarLista()
+
+}
+
+function actualizarLista(){
+
+let lista=""
+
+document.querySelectorAll("[id^='cant-']").forEach(e=>{
+
+let cantidad=parseInt(e.innerText)
+
+if(cantidad>0){
+
+let nombre=e.id.replace("cant-","")
+
+lista += nombre+" x"+cantidad+"<br>"
+
+}
+
+})
+
+document.getElementById("listaPedido").innerHTML=lista
+
+}
 
 function iniciarMenu(){
 
@@ -274,6 +349,7 @@ let span=document.getElementById("cant-"+id)
 span.innerText=parseInt(span.innerText)+1
 
 actualizarCarrito()
+actualizarLista()
 
 }
 
@@ -286,6 +362,7 @@ let v=parseInt(span.innerText)
 if(v>0){span.innerText=v-1}
 
 actualizarCarrito()
+actualizarLista()
 
 }
 
