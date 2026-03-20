@@ -1,388 +1,243 @@
 <!DOCTYPE html>
-<html lang="es">
+<html>
 <head>
-
-<meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<title>Red Light Pizza</title>
-
 <style>
-
 body{
-font-family:Arial;
-margin:0;
-background:#000;
+background:black;
 color:white;
+font-family:sans-serif;
 text-align:center;
 }
 
 h1{
-color:#ff2a2a;
+color:#ff3c00;
 }
 
 button{
+margin:5px;
 padding:10px;
-margin:6px;
 border:none;
 border-radius:10px;
-background:#ff2a2a;
+background:#ff3c00;
 color:white;
 font-size:16px;
 }
 
-.botones{
-margin:15px;
-}
-
 .producto{
-background:#111;
-margin:12px;
-padding:15px;
-border-radius:12px;
+border-bottom:1px solid #333;
+padding:10px;
 }
 
 .desc{
-font-size:13px;
-color:#bbb;
-margin:6px;
+font-size:14px;
+color:#ccc;
 }
 
 .contador button{
-width:35px;
-height:35px;
-font-size:18px;
-}
-
-.categoria{
-display:none;
+padding:5px 10px;
 }
 
 #carrito{
 position:fixed;
 top:10px;
 right:10px;
-background:#ff2a2a;
+background:#ff3c00;
 padding:10px;
 border-radius:10px;
 }
 
+#carritoDetalle{
+display:none;
+position:fixed;
+top:60px;
+right:10px;
+background:#111;
+padding:15px;
+border-radius:10px;
+width:250px;
+}
 </style>
-
 </head>
 
 <body>
 
 <div id="idioma">
-
-<h1>🍕 Red Light Pizza</h1>
-
-<h2>Elige tu idioma / Choose your language</h2>
-
+<h2>🌎 Elige tu idioma / Choose language</h2>
 <button onclick="iniciarMenu()">Español 🇲🇽</button>
-
 <button onclick="iniciarMenu()">English 🇺🇸</button>
-
 </div>
 
 <div id="menu" style="display:none">
 
-<div id="carrito" onclick="toggleCarrito()">
-🛒 <span id="total">0</span>
-</div>
-<div id="carritoDetalle" style="display:none; background:#111; padding:15px; position:fixed; top:60px; right:10px; width:250px; border-radius:10px;">
-
-<h3>🛒 Tu pedido</h3>
-
-<div id="listaPedido"></div>
-<div style="margin-top:10px">
-
-<p>¿Agregar algo más?</p>
-
-<button onclick="agregarExtra('Aderezo')">🧄 Aderezo $25</button>
-
-<button onclick="agregarExtra('Bebida')">🥤 Bebida</button>
-
- </div>
-
-<button onclick="enviarPedido()">📲 Enviar pedido</button>
-
-</div>
-  
-🛒 <span id="total">0</span>
-
-</div>
-
 <h1>🍕 Red Light Pizza</h1>
 
-<div class="botones">
+<div id="carrito" onclick="toggleCarrito()">🛒 <span id="total">0</span></div>
 
+<div id="carritoDetalle">
+<h3>🛒 Tu pedido</h3>
+<div id="listaPedido"></div>
+
+<p>¿Agregar algo más?</p>
+<button onclick="agregarExtra('Aderezo')">🧄 Aderezo $25</button>
+<button onclick="agregarExtra('Bebida')">🥤 Bebida</button>
+
+<button onclick="enviarPedido()">📲 Enviar pedido</button>
+</div>
+
+<div>
 <button onclick="mostrar('entradas')">🍗 Entradas</button>
-<button onclick="mostrar('pastas')">🍝 Pastas</button>
 <button onclick="mostrar('pizzas')">🍕 Pizzas</button>
 <button onclick="mostrar('bebidas')">🥤 Bebidas</button>
-
 </div>
 
 <!-- ENTRADAS -->
+<div id="entradas" class="categoriaMenu" style="display:none">
 
-<div id="entradas" class="categoria">
-
-<div class="producto">
-
-🍗 Chicken Tenders $200
-
-<div class="desc">
-Trozos de pechuga asados al horno (BBQ, búfalo chipotle, búfalo siracha)
-</div>
-
+<div class="producto">Chicken Tenders
+<div class="desc">Trozos de pechuga al horno</div>
 <div class="contador">
-<button onclick="restar('tenders')">-</button>
-<span id="cant-tenders">0</span>
-<button onclick="sumar('tenders')">+</button>
+<button onclick="restar('Chicken_Tenders')">-</button>
+<span id="cant-Chicken_Tenders">0</span>
+<button onclick="sumar('Chicken_Tenders')">+</button>
+</div>
 </div>
 
-</div>
-
-<div class="producto">
-
-🍟 Papas a la francesa $90
-
+<div class="producto">Papas francesa
 <div class="contador">
-<button onclick="restar('francesa')">-</button>
-<span id="cant-francesa">0</span>
-<button onclick="sumar('francesa')">+</button>
+<button onclick="restar('Papas_francesa')">-</button>
+<span id="cant-Papas_francesa">0</span>
+<button onclick="sumar('Papas_francesa')">+</button>
+</div>
 </div>
 
 </div>
 
-<div class="producto">
+<!-- BEBIDAS -->
+<div id="bebidas" class="categoriaMenu" style="display:none">
 
-🍟 Papas gajo $90
-
+<div class="producto">Coca
 <div class="contador">
-<button onclick="restar('gajo')">-</button>
-<span id="cant-gajo">0</span>
-<button onclick="sumar('gajo')">+</button>
+<button onclick="restar('Coca')">-</button>
+<span id="cant-Coca">0</span>
+<button onclick="sumar('Coca')">+</button>
+</div>
 </div>
 
-</div>
-
-<div class="producto">
-
-🧄 Pan de ajo $100
-
+<div class="producto">Coca light
 <div class="contador">
-<button onclick="restar('panajo')">-</button>
-<span id="cant-panajo">0</span>
-<button onclick="sumar('panajo')">+</button>
+<button onclick="restar('Coca_light')">-</button>
+<span id="cant-Coca_light">0</span>
+<button onclick="sumar('Coca_light')">+</button>
+</div>
 </div>
 
-</div>
-
-</div>
-
-<!-- PASTAS -->
-
-<div id="pastas" class="categoria">
-
-<div class="producto">
-
-🍝 Pasta Pomodoro
-
+<div class="producto">Sprite
 <div class="contador">
-<button onclick="restar('pomodoro')">-</button>
-<span id="cant-pomodoro">0</span>
-<button onclick="sumar('pomodoro')">+</button>
+<button onclick="restar('Sprite')">-</button>
+<span id="cant-Sprite">0</span>
+<button onclick="sumar('Sprite')">+</button>
+</div>
 </div>
 
-</div>
-
-<div class="producto">
-
-🍝 Pasta Alfredo
-
+<div class="producto">Agua mineral
 <div class="contador">
-<button onclick="restar('alfredo')">-</button>
-<span id="cant-alfredo">0</span>
-<button onclick="sumar('alfredo')">+</button>
+<button onclick="restar('Agua_mineral')">-</button>
+<span id="cant-Agua_mineral">0</span>
+<button onclick="sumar('Agua_mineral')">+</button>
+</div>
 </div>
 
-</div>
-
-<div class="producto">
-
-🍝 Pasta Aurora
-
+<div class="producto">Te negro
 <div class="contador">
-<button onclick="restar('aurora')">-</button>
-<span id="cant-aurora">0</span>
-<button onclick="sumar('aurora')">+</button>
+<button onclick="restar('Te_negro')">-</button>
+<span id="cant-Te_negro">0</span>
+<button onclick="sumar('Te_negro')">+</button>
 </div>
-
 </div>
 
 </div>
 
 <!-- PIZZAS -->
-
-<div id="pizzas" class="categoria"></div>
-
-<!-- BEBIDAS -->
-
-<div id="bebidas" class="categoria">
-
-<div class="producto">🥤 Coca</div>
-<div class="producto">🥤 Coca Light</div>
-<div class="producto">🥤 Sprite</div>
-<div class="producto">🍹 Schorle Felix</div>
-
-<div class="producto">🍸 Bacardí con Coca 355ml</div>
-<div class="producto">🍹 Vicki Mango 473ml</div>
-<div class="producto">🍹 Vicki Chamoy 473ml</div>
-
-<div class="producto">🍺 Corona</div>
-<div class="producto">🍺 Victoria</div>
-<div class="producto">🍺 XX Lager</div>
-<div class="producto">🍺 Modelo</div>
-
-<div class="producto">💧 Agua mineral</div>
-<div class="producto">🍵 Té negro</div>
-
-</div>
-
-<button onclick="enviarPedido()">📲 Enviar pedido</button>
+<div id="pizzas" class="categoriaMenu" style="display:none"></div>
 
 </div>
 
 <script>
-function agregarExtra(nombre){
-
-let id="extra-"+nombre
-
-if(!document.getElementById("cant-"+id)){
-
-let span=document.createElement("span")
-span.id="cant-"+id
-span.innerText=1
-span.style.display="none"
-
-document.body.appendChild(span)
-
-}else{
-
-let s=document.getElementById("cant-"+id)
-s.innerText=parseInt(s.innerText)+1
-
-}
-
-actualizarCarrito()
-actualizarLista()
-
-  }
-function toggleCarrito(){
-
-let c=document.getElementById("carritoDetalle")
-
-c.style.display = c.style.display=="none" ? "block" : "none"
-
-actualizarLista()
-
-}
-
-function actualizarLista(){
-
-let lista=""
-
-document.querySelectorAll("[id^='cant-']").forEach(e=>{
-
-let cantidad=parseInt(e.innerText)
-
-if(cantidad>0){
-
-let nombre=e.id.replace("cant-","")
-
-lista += nombre+" x"+cantidad+"<br>"
-
-}
-
-})
-
-document.getElementById("listaPedido").innerHTML=lista
-
-}
 
 function iniciarMenu(){
-
 document.getElementById("idioma").style.display="none"
-
 document.getElementById("menu").style.display="block"
-
+cargarPizzas()
 }
 
 function mostrar(cat){
-
-document.querySelectorAll(".categoria").forEach(c=>{
-c.style.display="none"
-})
-
+document.querySelectorAll(".categoriaMenu").forEach(d=>d.style.display="none")
 document.getElementById(cat).style.display="block"
-
-}
-
-function actualizarCarrito(){
-
-let total=0
-
-document.querySelectorAll("[id^='cant-']").forEach(e=>{
-total+=parseInt(e.innerText)
-})
-
-document.getElementById("total").innerText=total
-
 }
 
 function sumar(id){
-
-let span=document.getElementById("cant-"+id)
-
-span.innerText=parseInt(span.innerText)+1
-
+let s=document.getElementById("cant-"+id)
+s.innerText=parseInt(s.innerText)+1
 actualizarCarrito()
 actualizarLista()
-
 }
 
 function restar(id){
+let s=document.getElementById("cant-"+id)
+let v=parseInt(s.innerText)
+if(v>0){s.innerText=v-1}
+actualizarCarrito()
+actualizarLista()
+}
 
-let span=document.getElementById("cant-"+id)
+function actualizarCarrito(){
+let total=0
+document.querySelectorAll("[id^='cant-']").forEach(e=>{
+total+=parseInt(e.innerText)
+})
+document.getElementById("total").innerText=total
+}
 
-let v=parseInt(span.innerText)
+function toggleCarrito(){
+let c=document.getElementById("carritoDetalle")
+c.style.display=c.style.display=="none"?"block":"none"
+actualizarLista()
+}
 
-if(v>0){span.innerText=v-1}
+function actualizarLista(){
+let lista=""
+document.querySelectorAll("[id^='cant-']").forEach(e=>{
+let n=e.innerText
+if(n>0){
+lista+=e.id.replace("cant-","")+" x"+n+"<br>"
+}
+})
+document.getElementById("listaPedido").innerHTML=lista
+}
+
+function agregarExtra(nombre){
+let id="extra-"+nombre
+
+if(!document.getElementById("cant-"+id)){
+let s=document.createElement("span")
+s.id="cant-"+id
+s.innerText=1
+s.style.display="none"
+document.body.appendChild(s)
+}else{
+let s=document.getElementById("cant-"+id)
+s.innerText=parseInt(s.innerText)+1
+}
 
 actualizarCarrito()
 actualizarLista()
-
 }
 
-const pizzas=[
-"Marguerita",
-"Valentina",
-"Lucrecia",
-"Alessia",
-"Adriana",
-"Kalena",
-"Leilani",
-"Olivia",
-"Bianca",
-"Francesca",
-"Sofia",
-"Amalia",
-"Marietta"
-]
-
 function cargarPizzas(){
+
+let pizzas=["Marguerita","Valentina","Lucrecia","Alessia","Adriana","Kalena","Leilani","Olivia","Bianca","Francesca","Sofia","Amalia","Marietta"]
 
 let c=document.getElementById("pizzas")
 
@@ -391,44 +246,12 @@ pizzas.forEach(p=>{
 c.innerHTML+=`
 
 <div class="producto">
+🍕 <b onclick="togglePizza('${p}')">${p}</b>
 
-🍕 ${p} Individual
+<div id="box-${p}" style="display:none">
 
-<div class="contador">
-<button onclick="restar('${p}i')">-</button>
-<span id="cant-${p}i">0</span>
-<button onclick="sumar('${p}i')">+</button>
-</div>
-
-<div class="contador">
-
-🧀 Extra queso $20
-
-<button onclick="restar('${p}iq')">-</button>
-<span id="cant-${p}iq">0</span>
-<button onclick="sumar('${p}iq')">+</button>
-
-</div>
-
-</div>
-
-<div class="producto">
-
-🍕 ${p} Grande
-
-<div class="contador">
-<button onclick="restar('${p}g')">-</button>
-<span id="cant-${p}g">0</span>
-<button onclick="sumar('${p}g')">+</button>
-</div>
-
-<div class="contador">
-
-🧀 Extra queso $90
-
-<button onclick="restar('${p}gq')">-</button>
-<span id="cant-${p}gq">0</span>
-<button onclick="sumar('${p}gq')">+</button>
+<button onclick="agregarPizza('${p}','Individual')">Individual</button>
+<button onclick="agregarPizza('${p}','Grande')">Grande</button>
 
 </div>
 
@@ -440,28 +263,27 @@ c.innerHTML+=`
 
 }
 
-cargarPizzas()
+function togglePizza(p){
+let d=document.getElementById("box-"+p)
+d.style.display=d.style.display=="none"?"block":"none"
+}
 
-function enviarPedido(){
+function agregarPizza(p,tam){
 
-let texto="Pedido Red Light Pizza:%0A%0A"
+let id=p+"_"+tam
+sumar(id)
 
-document.querySelectorAll("[id^='cant-']").forEach(e=>{
+let cont=document.getElementById("box-"+p)
 
-let cantidad=parseInt(e.innerText)
-
-if(cantidad>0){
-
-let nombre=e.id.replace("cant-","")
-
-texto+=nombre+" x"+cantidad+"%0A"
+cont.innerHTML+=`
+<p>🧀 ¿Extra queso?</p>
+<button onclick="sumar('${id}_queso')">Sí</button>
+`
 
 }
 
-})
-
-window.open("https://wa.me/529515813970?text="+texto)
-
+function enviarPedido(){
+alert("Pedido enviado (simulación)")
 }
 
 </script>
