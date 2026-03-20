@@ -65,8 +65,8 @@ width:250px;
 
 <div id="idioma">
 <h2>🌎 Elige tu idioma / Choose language</h2>
-<button onclick="iniciarMenu()">Español 🇲🇽</button>
-<button onclick="iniciarMenu()">English 🇺🇸</button>
+<button onclick="iniciarMenu('es')">Español 🇲🇽</button>
+<button onclick="iniciarMenu('en')">English 🇺🇸</button>
 </div>
 
 <div id="menu" style="display:none">
@@ -190,82 +190,6 @@ width:250px;
 
 </div>
 
-<script>
-
-function iniciarMenu(){
-document.getElementById("idioma").style.display="none"
-document.getElementById("menu").style.display="block"
-cargarPizzas()
-}
-
-function mostrar(cat){
-document.querySelectorAll(".categoriaMenu").forEach(d=>d.style.display="none")
-document.getElementById(cat).style.display="block"
-}
-
-function sumar(id){
-let s=document.getElementById("cant-"+id)
-s.innerText=parseInt(s.innerText)+1
-actualizarCarrito()
-actualizarLista()
-}
-
-function restar(id){
-let s=document.getElementById("cant-"+id)
-let v=parseInt(s.innerText)
-if(v>0){s.innerText=v-1}
-actualizarCarrito()
-actualizarLista()
-}
-
-function actualizarCarrito(){
-let total=0
-document.querySelectorAll("[id^='cant-']").forEach(e=>{
-total+=parseInt(e.innerText)
-})
-document.getElementById("total").innerText=total
-}
-
-function toggleCarrito(){
-let c=document.getElementById("carritoDetalle")
-c.style.display=c.style.display=="none"?"block":"none"
-actualizarLista()
-}
-
-function actualizarLista(){
-let lista=""
-document.querySelectorAll("[id^='cant-']").forEach(e=>{
-let n=e.innerText
-if(n>0){
-lista+=e.id.replace("cant-","")+" x"+n+"<br>"
-}
-})
-document.getElementById("listaPedido").innerHTML=lista
-}
-
-function cargarPizzas(){
-
-let pizzas=["Marguerita","Valentina","Lucrecia","Alessia","Adriana","Kalena","Leilani","Olivia","Bianca","Francesca","Sofia","Amalia","Marietta"]
-
-let c=document.getElementById("pizzas")
-
-pizzas.forEach(p=>{
-
-c.innerHTML+=`
-
-<div class="producto">
-
-🍕 <b onclick="togglePizza('${p}')">${p}</b>
-
-<div id="box-${p}" style="display:none">
-
-<p>Selecciona tamaño:</p>
-
-<button onclick="sumar('${p}_individual')">Individual</button>
-<span id="cant-${p}_individual">0</span>
-
-<button onclick="sumar('${p}_grande')">Grande</button>
-<span id="cant-${p}_grande">0</span>
 
 <p>¿Desea queso extra?</p>
 
@@ -293,8 +217,157 @@ d.style.display=d.style.display=="none"?"block":"none"
 function enviarPedido(){
 alert("Pedido enviado (simulación)")
 }
+<script>
 
-</script>
+let idioma = "es"
 
-</body>
-</html>
+function iniciarMenu(lang){
+idioma = lang
+document.getElementById("idioma").style.display="none"
+document.getElementById("menu").style.display="block"
+cargarPizzas()
+}
+
+function mostrar(cat){
+document.querySelectorAll(".categoriaMenu").forEach(d=>d.style.display="none")
+document.getElementById(cat).style.display="block"
+}
+
+function sumar(id){
+
+if(!document.getElementById("cant-"+id)){
+let s=document.createElement("span")
+s.id="cant-"+id
+s.innerText=0
+s.style.display="none"
+document.body.appendChild(s)
+}
+
+let s=document.getElementById("cant-"+id)
+s.innerText=parseInt(s.innerText)+1
+
+// Mostrar queso solo si eligió tamaño
+if(id.includes("_individual") || id.includes("_grande")){
+let base=id.split("_")[0]
+let box=document.getElementById("queso-"+base)
+if(box) box.style.display="block"
+}
+
+actualizarCarrito()
+actualizarLista()
+}
+
+function restar(id){
+let s=document.getElementById("cant-"+id)
+if(!s) return
+let v=parseInt(s.innerText)
+if(v>0){s.innerText=v-1}
+actualizarCarrito()
+actualizarLista()
+}
+
+function actualizarCarrito(){
+let total=0
+document.querySelectorAll("[id^='cant-']").forEach(e=>{
+total+=parseInt(e.innerText)
+})
+document.getElementById("total").innerText=total
+}
+
+function toggleCarrito(){
+let c=document.getElementById("carritoDetalle")
+c.style.display=c.style.display=="none"?"block":"none"
+actualizarLista()
+}
+
+function actualizarLista(){
+let lista=""
+document.querySelectorAll("[id^='cant-']").forEach(e=>{
+let n=e.innerText
+if(n>0){
+lista+=e.id.replace("cant-","").replaceAll("_"," ")+" x"+n+"\n"
+}
+})
+document.getElementById("listaPedido").innerText=lista
+}
+
+function cargarPizzas(){
+
+let pizzas=["Marguerita","Valentina","Lucrecia","Alessia","Adriana","Kalena","Leilani","Olivia","Bianca","Francesca","Sofia","Amalia","Marietta"]
+
+let c=document.getElementById("pizzas")
+
+pizzas.forEach(p=>{
+
+c.innerHTML+=`
+
+<div class="producto">
+
+🍕 <b onclick="togglePizza('${p}')">${p}</b>
+
+<div id="box-${p}" style="display:none">
+
+<p>${idioma=="es"?"Tamaño":"Size"}:</p>
+
+<div class="contador">
+<button onclick="restar('${p}_individual')">-</button>
+<span id="cant-${p}_individual">0</span>
+<button onclick="sumar('${p}_individual')">+</button>
+</div>
+
+<div class="contador">
+<button onclick="restar('${p}_grande')">-</button>
+<span id="cant-${p}_grande">0</span>
+<button onclick="sumar('${p}_grande')">+</button>
+</div>
+
+<div id="queso-${p}" style="display:none">
+<p>${idioma=="es"?"¿Extra queso?":"Extra cheese?"}</p>
+
+<div class="contador">
+<button onclick="restar('${p}_queso_ind')">-</button>
+<span id="cant-${p}_queso_ind">0</span>
+<button onclick="sumar('${p}_queso_ind')">+</button>
+</div>
+
+<div class="contador">
+<button onclick="restar('${p}_queso_grande')">-</button>
+<span id="cant-${p}_queso_grande">0</span>
+<button onclick="sumar('${p}_queso_grande')">+</button>
+</div>
+</div>
+
+</div>
+
+</div>
+
+`
+
+})
+
+}
+
+function togglePizza(p){
+let d=document.getElementById("box-"+p)
+d.style.display=d.style.display=="none"?"block":"none"
+}
+
+function enviarPedido(){
+
+let texto="Pedido:%0A"
+
+document.querySelectorAll("[id^='cant-']").forEach(e=>{
+let n=parseInt(e.innerText)
+if(n>0){
+texto+=e.id.replace("cant-","").replaceAll("_"," ")+" x"+n+"%0A"
+}
+})
+
+// Número con código país México
+let numero="529515813970"
+
+let url="https://wa.me/"+numero+"?text="+texto
+
+window.open(url,"_blank")
+}
+  </script>
