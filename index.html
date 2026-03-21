@@ -8,7 +8,6 @@
         :root { --primary: #ff3c00; --bg: #000; --card: #111; }
         body { background: var(--bg); color: #fff; font-family: 'Segoe UI', sans-serif; margin: 0; padding-bottom: 100px; }
         
-        /* Selector de Idioma */
         #lang-overlay { position: fixed; inset: 0; background: #000; z-index: 1000; display: flex; flex-direction: column; align-items: center; justify-content: center; text-align: center; }
         .lang-btn { background: var(--primary); color: white; border: none; padding: 15px 40px; margin: 10px; border-radius: 10px; font-weight: bold; font-size: 1.2rem; cursor: pointer; }
 
@@ -28,7 +27,7 @@
         .detalles-pizza.open { display: block; }
         
         .variante { display: flex; justify-content: space-between; align-items: center; margin: 12px 0; }
-        .extra-queso-box { display: none; padding-left: 15px; border-left: 2px solid var(--primary); margin-bottom: 15px; }
+        .extra-queso-box { display: none; padding-left: 15px; border-left: 2px solid var(--primary); margin-bottom: 15px; background: #111; padding: 5px 10px; border-radius: 0 8px 8px 0; }
         .extra-queso-box.visible { display: block; }
 
         .contador { display: flex; align-items: center; gap: 10px; }
@@ -37,15 +36,16 @@
 
         #carrito-bar { position: fixed; bottom: 0; width: 100%; background: var(--primary); padding: 15px; display: flex; justify-content: space-between; box-sizing: border-box; font-weight: bold; z-index: 100; }
         #panel { position: fixed; bottom: 62px; left: 0; width: 100%; background: #111; border-top: 2px solid var(--primary); max-height: 55vh; overflow-y: auto; display: none; z-index: 99; padding-bottom: 20px; }
-        .aderezo-sugerencia { background: #1a1a1a; margin: 10px; padding: 10px; border-radius: 8px; border: 1px dashed var(--primary); text-align: center; font-size: 0.9rem; }
-        .item-carrito { padding: 10px 20px; border-bottom: 1px solid #222; display: flex; justify-content: space-between; font-size: 0.9rem; }
-        .btn-enviar { width: 90%; margin: 10px 5%; padding: 15px; background: #25D366; color: white; border: none; border-radius: 10px; font-weight: bold; font-size: 1rem; }
+        .aderezo-sugerencia { background: #1a1a1a; margin: 10px; padding: 15px; border-radius: 8px; border: 1px dashed var(--primary); text-align: center; font-size: 0.9rem; }
+        .item-carrito { padding: 10px 20px; border-bottom: 1px solid #333; display: flex; justify-content: space-between; font-size: 0.9rem; }
+        .btn-enviar { width: 90%; margin: 10px 5%; padding: 15px; background: #25D366; color: white; border: none; border-radius: 10px; font-weight: bold; font-size: 1.1rem; cursor: pointer; }
     </style>
 </head>
 <body>
 
 <div id="lang-overlay">
-    <h2>Select your language / Selecciona tu idioma</h2>
+    <h1>Red Light Pizza</h1>
+    <p>Select your language / Selecciona tu idioma</p>
     <button class="lang-btn" onclick="setLang('es')">Español</button>
     <button class="lang-btn" onclick="setLang('en')">English</button>
 </div>
@@ -88,30 +88,30 @@ let lang = 'es';
 
 const TRANSLATIONS = {
     es: {
-        placeholder: "Escribe tu nombre",
+        placeholder: "Escribe tu nombre (Obligatorio)",
         h_entradas: "🥗 Entradas y Calzones",
         h_pastas: "🍝 Pastas",
         h_pizzas: "🍕 Nuestras Pizzas",
         h_bebidas: "🥤 Bebidas y Cócteles",
         h_salsas: "🍯 Salsas y Aderezos",
-        btn_send: "Confirmar y enviar por WhatsApp",
+        btn_send: "Enviar pedido por WhatsApp",
         txt_aderezo: "¿Deseas agregar algún aderezo extra? $25",
-        ver: "Elegir ▾",
+        ver: "Elegir tamaño ▾",
         queso_e: "¿Queso Extra?",
-        loc_msg: "Si su pedido es para domicilio, por favor mande su ubicación.",
+        loc_msg: "Si su pedido es para domicilio mandar su ubicación.",
         ind: "Individual",
         gde: "Grande"
     },
     en: {
-        placeholder: "Enter your name",
+        placeholder: "Enter your name (Required)",
         h_entradas: "🥗 Appetizers & Calzones",
         h_pastas: "🍝 Pastas",
         h_pizzas: "🍕 Our Pizzas",
         h_bebidas: "🥤 Drinks & Cocktails",
         h_salsas: "🍯 Sauces & Dressings",
-        btn_send: "Confirm & send via WhatsApp",
+        btn_send: "Send order via WhatsApp",
         txt_aderezo: "Would you like to add an extra dressing? $25",
-        ver: "Choose ▾",
+        ver: "Choose size ▾",
         queso_e: "Extra Cheese?",
         loc_msg: "If your order is for delivery, please send your location.",
         ind: "Personal",
@@ -123,26 +123,56 @@ const MENU = {
     entradas: [
         { n: {es: "Chicken Tenders", en: "Chicken Tenders"}, p: 200, d: {es: "Pechuga al horno (BBQ, búfalo chipotle, búfalo siracha)", en: "Baked chicken (BBQ, buffalo chipotle, buffalo sriracha)"} },
         { n: {es: "Papas a la francesa", en: "French Fries"}, p: 90, d: {es: "Aceite de oliva, pimienta y aderezo ajo parmesano", en: "Olive oil, pepper, and garlic parmesan dressing"} },
+        { n: {es: "Papas gajo", en: "Wedge Potatoes"}, p: 90, d: {es: "Asadas al horno con aderezo ajo parmesano", en: "Roasted with garlic parmesan dressing"} },
         { n: {es: "Pan de ajo", en: "Garlic Bread"}, p: 100, d: {es: "Queso cremoso, parmesano, ajo y pesto", en: "Cream cheese, parmesan, garlic, and pesto"} },
-        { n: {es: "Calzone 4 quesos", en: "4 Cheese Calzone"}, p: 150, d: {es: "Port, azul, mozarella, parmesano y pesto", en: "Port, blue, mozzarella, parmesan, and pesto"} }
+        { n: {es: "Calzone espinacas", en: "Spinach Calzone"}, p: 150, d: {es: "Quesos, tomates marinados, espinaca y albahaca", en: "Cheeses, marinated tomatoes, spinach, and basil"} },
+        { n: {es: "Calzone 4 quesos", en: "4 Cheese Calzone"}, p: 150, d: {es: "Port, azul, mozarella, parmesano y pesto", en: "Port, blue, mozzarella, parmesan, and pesto"} },
+        { n: {es: "Calzone italiano", en: "Italian Calzone"}, p: 150, d: {es: "Quesos, peperoni, salami, jamón York y pesto", en: "Cheeses, pepperoni, salami, ham, and pesto"} },
+        { n: {es: "Ensalada italiana", en: "Italian Salad"}, p: 120, d: {es: "Lechugas, pimiento, champiñón, cebolla y balsámico", en: "Lettuce, peppers, mushrooms, onion, and balsamic"} },
+        { n: {es: "Ensalada Cesare", en: "Caesar Salad"}, p: 120, d: {es: "Lechugas, espinacas, cherrys, ajo y parmesano", en: "Lettuce, spinach, cherry tomatoes, garlic, and parmesan"} }
+    ],
+    pastas: [
+        { n: {es: "Pasta Pomodoro", en: "Pasta Pomodoro"}, p: 140, d: {es: "Tomate fresco, cherrys, albahaca y parmesano", en: "Fresh tomato, cherry tomatoes, basil, and parmesan"} },
+        { n: {es: "Pasta Alfredo", en: "Pasta Alfredo"}, p: 150, d: {es: "Ajo rostizado, mantequilla y parmesano", en: "Roasted garlic, butter, and parmesan"} },
+        { n: {es: "Pasta Aurora", en: "Pasta Aurora"}, p: 150, d: {es: "Salsa Alfredo con pomodoro, cherrys y albahaca", en: "Alfredo & pomodoro sauce, cherry tomatoes, and basil"} }
     ],
     pizzas: [
         { n: "Marguerita", d: {es: "Quesos cremosos, albahaca y aceite de oliva", en: "Creamy cheeses, basil, and olive oil"} },
         { n: "Valentina", d: {es: "Quesos cremosos, Peperoni y orégano", en: "Creamy cheeses, Pepperoni, and oregano"} },
+        { n: "Lucrecia", d: {es: "Champiñón, Portobello, tomillo y pesto", en: "Mushrooms, Portobello, thyme, and pesto"} },
+        { n: "Alessia", d: {es: "Salchicha italiana, cebolla morada y jalapeño", en: "Italian sausage, red onion, and jalapeño"} },
+        { n: "Adriana", d: {es: "Jamón york, champiñones, aceitunas y hierbas", en: "Ham, mushrooms, olives, and fine herbs"} },
+        { n: "Kalena", d: {es: "Tocino, piña y salsa BBQ", en: "Bacon, pineapple, and BBQ sauce"} },
+        { n: "Leilani", d: {es: "Jamón York y piña", en: "Ham and pineapple"} },
+        { n: "Olivia", d: {es: "Espinaca, tocino y champiñón", en: "Spinach, bacon, and mushrooms"} },
         { n: "Bianca", d: {es: "Mozarella, Port, Azul y parmesano", en: "Mozzarella, Port, Blue, and parmesan"} },
+        { n: "Francesca", d: {es: "Peperoni, salchicha, aceitunas, pimiento y cebolla", en: "Pepperoni, sausage, olives, peppers, and onion"} },
+        { n: "Sofia", d: {es: "Jamón serrano, cherrys, rucula y oliva", en: "Prosciutto, cherry tomatoes, arugula, and olive oil"} },
+        { n: "Amalia", d: {es: "Peperoni, salami, Jamón york, tocino y orégano", en: "Pepperoni, salami, ham, bacon, and oregano"} },
         { n: "Marietta", d: {es: "Queso Port, manzana, nuez y dulce de leche", en: "Port cheese, apple, walnuts, and caramel"} }
-    ],
-    pastas: [
-        { n: "Pasta Pomodoro", p: 140, d: {es: "Tomate fresco, cherrys y parmesano", en: "Fresh tomato, cherry tomatoes, and parmesan"} },
-        { n: "Pasta Alfredo", p: 150, d: {es: "Ajo rostizado, mantequilla y parmesano", en: "Roasted garlic, butter, and parmesan"} }
     ],
     bebidas: [
         { n: "Coca Cola", p: 35, d: {es: "Refresco", en: "Soda"} },
-        { n: "Bacardí + Coca", p: 90, d: {es: "Lata 355ml", en: "Can 355ml"} }
+        { n: "Coca Light", p: 35, d: {es: "Refresco", en: "Soda"} },
+        { n: "Sprite", p: 35, d: {es: "Refresco", en: "Soda"} },
+        { n: "Schorle Frambuesa", p: 55, d: {es: "Bebida refrescante (Felix)", en: "Refreshing drink"} },
+        { n: "Schorle Mandarina", p: 55, d: {es: "Bebida refrescante (Felix)", en: "Refreshing drink"} },
+        { n: "Schorle Maracuya", p: 55, d: {es: "Bebida refrescante (Felix)", en: "Refreshing drink"} },
+        { n: "Bacardí + Coca", p: 90, d: {es: "Lata 355ml", en: "Can 355ml"} },
+        { n: "Vicki Mango", p: 80, d: {es: "Lata 473ml", en: "Can 473ml"} },
+        { n: "Vicki Chamoy", p: 80, d: {es: "Lata 473ml", en: "Can 473ml"} },
+        { n: "Corona", p: 45, d: {es: "Cerveza", en: "Beer"} },
+        { n: "Victoria", p: 45, d: {es: "Cerveza", en: "Beer"} },
+        { n: "XX Lager", p: 45, d: {es: "Lata", en: "Can"} },
+        { n: "Modelo Lata", p: 45, d: {es: "Lata", en: "Can"} },
+        { n: "Agua Mineral", p: 30, d: {es: "Refrescante", en: "Sparkling water"} },
+        { n: "Te Negro", p: 30, d: {es: "Bebida fría", en: "Iced tea"} }
     ],
     salsas: [
         { n: {es: "Pesto", en: "Pesto"}, p: 25, d: {es: "Albahaca artesanal", en: "Handmade basil"} },
-        { n: {es: "Aderezo Ajo", en: "Garlic Dressing"}, p: 25, d: {es: "Cremoso parmesano", en: "Creamy parmesan"} }
+        { n: {es: "Aderezo Ajo-Parmesano", en: "Garlic-Parmesan"}, p: 25, d: {es: "Cremoso de la casa", en: "House creamy dressing"} },
+        { n: {es: "Dulce de Leche", en: "Caramel Sauce"}, p: 25, d: {es: "Para postres", en: "For desserts"} },
+        { n: {es: "Infusion de tomillo", en: "Thyme Infusion"}, p: 25, d: {es: "Aceite aromático", en: "Aromatic oil"} }
     ]
 };
 
@@ -165,14 +195,12 @@ function updateCart(id, name, price, change) {
     cart[id].cant += change;
     if (cart[id].cant <= 0) delete cart[id];
     
-    // Lógica para mostrar queso extra solo si hay pizza seleccionada
+    // Lógica dinámica para el queso extra
+    const baseId = id.split('_')[0];
     if (id.includes('_i')) {
-        let extra = document.getElementById('qbox_i_' + id.split('_')[0]);
-        if(extra) extra.classList.toggle('visible', cart[id]?.cant > 0);
-    }
-    if (id.includes('_g')) {
-        let extra = document.getElementById('qbox_g_' + id.split('_')[0]);
-        if(extra) extra.classList.toggle('visible', cart[id]?.cant > 0);
+        document.getElementById('qbox_i_' + baseId).classList.toggle('visible', cart[id]?.cant > 0);
+    } else if (id.includes('_g')) {
+        document.getElementById('qbox_g_' + baseId).classList.toggle('visible', cart[id]?.cant > 0);
     }
     
     renderCart();
@@ -195,15 +223,12 @@ function renderCart() {
 }
 
 function renderMenu() {
-    document.getElementById('sec-entradas').innerHTML = "";
-    document.getElementById('sec-pizzas').innerHTML = "";
-    document.getElementById('sec-pastas').innerHTML = "";
-    document.getElementById('sec-bebidas').innerHTML = "";
-    document.getElementById('sec-salsas').innerHTML = "";
+    const sections = ['sec-entradas', 'sec-pastas', 'sec-pizzas', 'sec-bebidas', 'sec-salsas'];
+    sections.forEach(s => document.getElementById(s).innerHTML = "");
 
-    MENU.pizzas.forEach(p => crearPizza(p));
     MENU.entradas.forEach(e => crearSimple(e, 'sec-entradas'));
     MENU.pastas.forEach(pa => crearSimple(pa, 'sec-pastas'));
+    MENU.pizzas.forEach(p => crearPizza(p));
     MENU.bebidas.forEach(b => crearSimple(b, 'sec-bebidas'));
     MENU.salsas.forEach(s => crearSimple(s, 'sec-salsas'));
 }
@@ -225,48 +250,48 @@ function crearSimple(item, containerId) {
 }
 
 function crearPizza(p) {
-    const id = p.n;
+    const safeId = p.n.replace(/\s/g, '');
     const div = document.createElement('div');
     div.className = 'producto';
     div.innerHTML = `
-        <div class="prod-header" onclick="togglePizza('${id}')">
+        <div class="prod-header" onclick="togglePizza('${safeId}')">
             <div class="info-prod"><b>Pizza ${p.n}</b><small>${p.d[lang]}</small></div>
             <span style="font-size:0.7rem; color:var(--primary)">${TRANSLATIONS[lang].ver}</span>
         </div>
-        <div class="detalles-pizza" id="detalles-${id}">
+        <div class="detalles-pizza" id="detalles-${safeId}">
             <div class="variante">
                 <span>${TRANSLATIONS[lang].ind} <b>$150</b></span>
                 <div class="contador">
-                    <button class="btn-control" onclick="updateCart('${id}_i','${id} Ind',150,-1)">-</button>
-                    <span id="ui-${id}_i" class="count-val">0</span>
-                    <button class="btn-control" onclick="updateCart('${id}_i','${id} Ind',150,1)">+</button>
+                    <button class="btn-control" onclick="updateCart('${safeId}_i','${p.n} Ind',150,-1)">-</button>
+                    <span id="ui-${safeId}_i" class="count-val">0</span>
+                    <button class="btn-control" onclick="updateCart('${safeId}_i','${p.n} Ind',150,1)">+</button>
                 </div>
             </div>
-            <div class="extra-queso-box" id="qbox_i_${id}">
+            <div class="extra-queso-box" id="qbox_i_${safeId}">
                 <div class="variante">
                     <span>+ ${TRANSLATIONS[lang].queso_e} ($25)</span>
                     <div class="contador">
-                        <button class="btn-control" onclick="updateCart('${id}_qi','Extra Q. Ind',25,-1)">-</button>
-                        <span id="ui-${id}_qi" class="count-val">0</span>
-                        <button class="btn-control" onclick="updateCart('${id}_qi','Extra Q. Ind',25,1)">+</button>
+                        <button class="btn-control" onclick="updateCart('${safeId}_qi','Extra Q. Ind (${p.n})',25,-1)">-</button>
+                        <span id="ui-${safeId}_qi" class="count-val">0</span>
+                        <button class="btn-control" onclick="updateCart('${safeId}_qi','Extra Q. Ind (${p.n})',25,1)">+</button>
                     </div>
                 </div>
             </div>
             <div class="variante">
                 <span>${TRANSLATIONS[lang].gde} <b>$300</b></span>
                 <div class="contador">
-                    <button class="btn-control" onclick="updateCart('${id}_g','${id} Gde',300,-1)">-</button>
-                    <span id="ui-${id}_g" class="count-val">0</span>
-                    <button class="btn-control" onclick="updateCart('${id}_g','${id} Gde',300,1)">+</button>
+                    <button class="btn-control" onclick="updateCart('${safeId}_g','${p.n} Gde',300,-1)">-</button>
+                    <span id="ui-${safeId}_g" class="count-val">0</span>
+                    <button class="btn-control" onclick="updateCart('${safeId}_g','${p.n} Gde',300,1)">+</button>
                 </div>
             </div>
-            <div class="extra-queso-box" id="qbox_g_${id}">
+            <div class="extra-queso-box" id="qbox_g_${safeId}">
                 <div class="variante">
                     <span>+ ${TRANSLATIONS[lang].queso_e} ($90)</span>
                     <div class="contador">
-                        <button class="btn-control" onclick="updateCart('${id}_qg','Extra Q. Gde',90,-1)">-</button>
-                        <span id="ui-${id}_qg" class="count-val">0</span>
-                        <button class="btn-control" onclick="updateCart('${id}_qg','Extra Q. Gde',90,1)">+</button>
+                        <button class="btn-control" onclick="updateCart('${safeId}_qg','Extra Q. Gde (${p.n})',90,-1)">-</button>
+                        <span id="ui-${safeId}_qg" class="count-val">0</span>
+                        <button class="btn-control" onclick="updateCart('${safeId}_qg','Extra Q. Gde (${p.n})',90,1)">+</button>
                     </div>
                 </div>
             </div>
@@ -288,4 +313,4 @@ function enviarWhatsApp() {
 }
 </script>
 </body>
-</html>
+                                                                           </html>
