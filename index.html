@@ -1,181 +1,198 @@
 
 <!DOCTYPE html>
-<html>
+<html lang="es">
 <head>
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-
-<style>
-body{background:black;color:white;font-family:sans-serif;margin:0}
-h1{text-align:center;color:#ff3c00}
-
-input{width:90%;margin:10px;padding:10px;border-radius:10px;border:none}
-
-button{margin:3px;padding:8px;border:none;border-radius:10px;background:#ff3c00;color:white}
-
-.scroll{display:flex;overflow-x:auto;gap:10px;padding:10px}
-
-.producto{min-width:240px;background:#111;padding:10px;border-radius:10px}
-
-.contador{display:flex;align-items:center;gap:5px}
-
-#carrito{position:fixed;top:10px;right:10px;background:#ff3c00;padding:10px;border-radius:10px}
-
-#panel{position:fixed;top:60px;right:10px;background:#111;padding:10px;border-radius:10px;width:280px;display:none}
-</style>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Red Light Pizza</title>
+    <style>
+        :root { --primary: #ff3c00; --bg: #000; --card: #111; }
+        body { background: var(--bg); color: #fff; font-family: 'Segoe UI', sans-serif; margin: 0; padding-bottom: 80px; }
+        
+        h1 { text-align: center; color: var(--primary); margin: 20px 0; font-size: 2.5rem; }
+        h2 { border-left: 4px solid var(--primary); padding-left: 15px; margin: 25px 15px 15px; }
+        
+        input { width: calc(100% - 40px); margin: 10px 20px; padding: 12px; border-radius: 8px; border: 1px solid #333; background: #222; color: #fff; }
+        
+        /* Contenedor Vertical */
+        .menu-container { display: flex; flex-direction: column; gap: 15px; padding: 0 15px; }
+        
+        .producto { background: var(--card); padding: 15px; border-radius: 12px; border: 1px solid #222; }
+        .producto b { font-size: 1.2rem; display: block; margin-bottom: 5px; }
+        
+        .opciones-pizza { margin-top: 10px; padding-top: 10px; border-top: 1px dashed #333; }
+        .variante { display: flex; justify-content: space-between; align-items: center; margin: 8px 0; background: #1a1a1a; padding: 8px; border-radius: 8px; }
+        
+        .contador { display: flex; align-items: center; gap: 12px; }
+        .btn-control { width: 32px; height: 32px; border-radius: 50%; border: none; background: var(--primary); color: #fff; font-weight: bold; cursor: pointer; }
+        .btn-control:disabled { background: #444; opacity: 0.5; }
+        
+        /* Carrito Flotante */
+        #carrito-bar { position: fixed; bottom: 0; width: 100%; background: var(--primary); padding: 15px; display: flex; justify-content: space-between; align-items: center; font-weight: bold; cursor: pointer; z-index: 100; }
+        
+        #panel { position: fixed; bottom: 60px; left: 0; width: 100%; background: #111; border-top: 2px solid var(--primary); max-height: 70vh; overflow-y: auto; display: none; z-index: 99; padding-bottom: 20px; }
+        .item-carrito { padding: 10px 20px; border-bottom: 1px solid #222; display: flex; justify-content: space-between; }
+        
+        .extra-queso { font-size: 0.85rem; color: #aaa; margin-top: 4px; display: block; }
+        .btn-enviar { width: 90%; margin: 20px 5%; padding: 15px; background: #25D366; color: white; border: none; border-radius: 10px; font-weight: bold; font-size: 1rem; }
+    </style>
 </head>
-
 <body>
 
 <h1>🍕 Red Light Pizza</h1>
+<input id="nombre" type="text" placeholder="Ingresa tu nombre para el pedido">
 
-<input id="nombre" placeholder="Tu nombre (obligatorio)">
+<h2>Refrescos y Cervezas</h2>
+<div class="menu-container" id="container-bebidas"></div>
 
-<div id="carrito" onclick="toggle()">🛒 <span id="totalItems">0</span> | $<span id="totalPrecio">0</span></div>
+<h2>Entradas y Pastas</h2>
+<div class="menu-container" id="container-entradas"></div>
+
+<h2>Nuestras Pizzas</h2>
+<div class="menu-container" id="container-pizzas"></div>
 
 <div id="panel">
-<div id="lista"></div>
-
-<p>Agregar aderezo $25</p>
-<button onclick="add('Aderezo',25)">+</button>
-
-<p>Agregar bebida</p>
-<button onclick="add('Coca',35)">Coca</button>
-<button onclick="add('Sprite',35)">Sprite</button>
-
-<button onclick="enviar()">Enviar WhatsApp</button>
+    <div id="lista-items"></div>
+    <button class="btn-enviar" onclick="enviarWhatsApp()">🚀 Confirmar y enviar Pedido</button>
 </div>
 
-<!-- ENTRADAS -->
-<h2>Entradas</h2>
-<div class="scroll">
-
-<div class="producto">Chicken Tenders $200
-<div class="contador">
-<button onclick="rest('tenders')">-</button>
-<button onclick="add('Chicken Tenders',200)">+</button>
-</div></div>
-
-<div class="producto">Papas francesa $90
-<div class="contador">
-<button onclick="rest('francesa')">-</button>
-<button onclick="add('Papas francesa',90)">+</button>
-</div></div>
-
-<div class="producto">Papas gajo $90
-<div class="contador">
-<button onclick="rest('gajo')">-</button>
-<button onclick="add('Papas gajo',90)">+</button>
-</div></div>
-
-<div class="producto">Pan de ajo $100
-<div class="contador">
-<button onclick="rest('pan')">-</button>
-<button onclick="add('Pan de ajo',100)">+</button>
-</div></div>
-
+<div id="carrito-bar" onclick="toggleCarrito()">
+    <span>🛒 Ver mi pedido (<span id="totalItems">0</span>)</span>
+    <span>Total: $<span id="totalPrecio">0</span></span>
 </div>
-
-<!-- BEBIDAS -->
-<h2>Bebidas</h2>
-<div class="scroll">
-
-<div class="producto">Coca $35<button onclick="add('Coca',35)">+</button></div>
-<div class="producto">Coca Light $35<button onclick="add('Coca Light',35)">+</button></div>
-<div class="producto">Sprite $35<button onclick="add('Sprite',35)">+</button></div>
-<div class="producto">Agua mineral $30<button onclick="add('Agua mineral',30)">+</button></div>
-<div class="producto">Té negro $30<button onclick="add('Te negro',30)">+</button></div>
-
-</div>
-
-<!-- PIZZAS -->
-<h2>Pizzas</h2>
-<div class="scroll" id="pizzas"></div>
 
 <script>
+let cart = {};
 
-let cart={}
+const MENU = {
+    bebidas: [
+        { n: "Coca Cola", p: 35 }, { n: "Coca Light", p: 35 }, { n: "Sprite", p: 35 },
+        { n: "Schorle", p: 55 }, { n: "Corona", p: 45 }, { n: "Victoria", p: 45 },
+        { n: "Modelo", p: 45 }, { n: "Agua Mineral", p: 30 }
+    ],
+    entradas: [
+        { n: "Chicken Tenders", p: 200 }, { n: "Papas Francesa", p: 90 },
+        { n: "Pan de Ajo", p: 100 }, { n: "Pasta Alfredo", p: 150 },
+        { n: "Ensalada Cesar", p: 120 }
+    ],
+    pizzas: [
+        "Marguerita", "Valentina", "Lucrecia", "Alessia", "Adriana", 
+        "Kalena", "Leilani", "Olivia", "Bianca", "Francesca", "Sofia"
+    ]
+};
 
-function add(nombre,precio){
-if(!cart[nombre]) cart[nombre]={cant:0,precio}
-cart[nombre].cant++
-render()
+// --- Lógica de Datos ---
+function updateCart(id, name, price, change) {
+    if (!cart[id]) cart[id] = { name, price, cant: 0 };
+    cart[id].cant += change;
+    if (cart[id].cant <= 0) delete cart[id];
+    render();
 }
 
-function rest(nombre){
-if(cart[nombre]){
-cart[nombre].cant--
-if(cart[nombre].cant<=0) delete cart[nombre]
-render()
-}
-}
-
-function render(){
-let items=0,total=0,html=""
-
-for(let k in cart){
-items+=cart[k].cant
-total+=cart[k].cant*cart[k].precio
-html+=`${k} x${cart[k].cant} ($${cart[k].precio}) 
-<button onclick="rest('${k}')">❌</button><br>`
-}
-
-document.getElementById("totalItems").innerText=items
-document.getElementById("totalPrecio").innerText=total
-document.getElementById("lista").innerHTML=html
-}
-
-function toggle(){
-let p=document.getElementById("panel")
-p.style.display=p.style.display=="none"?"block":"none"
+function render() {
+    let totalItems = 0, totalMoney = 0, html = "";
+    
+    // Actualizar números en la interfaz de productos
+    document.querySelectorAll('.count-val').forEach(span => span.innerText = 0);
+    
+    for (let id in cart) {
+        let item = cart[id];
+        totalItems += item.cant;
+        totalMoney += (item.cant * item.price);
+        
+        let el = document.getElementById("ui-" + id);
+        if (el) el.innerText = item.cant;
+        
+        html += `<div class="item-carrito">
+            <span>${item.name} x${item.cant}</span>
+            <span>$${item.cant * item.price}</span>
+        </div>`;
+    }
+    
+    document.getElementById("totalItems").innerText = totalItems;
+    document.getElementById("totalPrecio").innerText = totalMoney;
+    document.getElementById("lista-items").innerHTML = html || "<p style='padding:20px'>Tu carrito está vacío</p>";
 }
 
-function enviar(){
-let nombre=document.getElementById("nombre").value
-if(!nombre){alert("Nombre obligatorio");return}
-
-let texto="Pedido de "+nombre+"%0A"
-
-for(let k in cart){
-texto+=k+" x"+cart[k].cant+"%0A"
+// --- Generadores de Interfaz ---
+function crearSimple(item, containerId) {
+    const div = document.createElement('div');
+    div.className = 'producto';
+    div.innerHTML = `
+        <div style="display:flex; justify-content:space-between; align-items:center">
+            <b>${item.n} $${item.p}</b>
+            <div class="contador">
+                <button class="btn-control" onclick="updateCart('${item.n}','${item.n}',${item.p},-1)">-</button>
+                <span id="ui-${item.n}" class="count-val">0</span>
+                <button class="btn-control" onclick="updateCart('${item.n}','${item.n}',${item.p},1)">+</button>
+            </div>
+        </div>`;
+    document.getElementById(containerId).appendChild(div);
 }
 
-texto+="Total: $"+document.getElementById("totalPrecio").innerText
-
-window.open("https://wa.me/529515813970?text="+texto)
+function crearPizza(nombre) {
+    const div = document.createElement('div');
+    div.className = 'producto';
+    div.innerHTML = `
+        <b>🍕 Pizza ${nombre}</b>
+        <div class="opciones-pizza">
+            <div class="variante">
+                <div>Individual $150 <small class="extra-queso">+ Queso $25</small></div>
+                <div class="contador">
+                    <button class="btn-control" onclick="updateCart('${nombre}_ind','${nombre} Ind.',150,-1)">-</button>
+                    <span id="ui-${nombre}_ind" class="count-val">0</span>
+                    <button class="btn-control" onclick="updateCart('${nombre}_ind','${nombre} Ind.',150,1)">+</button>
+                </div>
+            </div>
+            <div class="variante" style="background:transparent; padding:0 10px">
+                <span>Extra Queso Ind. ($25)</span>
+                <div class="contador">
+                    <button class="btn-control" onclick="updateCart('${nombre}_qind','Queso Extra Ind.',25,-1)">-</button>
+                    <span id="ui-${nombre}_qind" class="count-val">0</span>
+                    <button class="btn-control" onclick="updateCart('${nombre}_qind','Queso Extra Ind.',25,1)">+</button>
+                </div>
+            </div>
+            <div class="variante">
+                <div>Grande $300 <small class="extra-queso">+ Queso $90</small></div>
+                <div class="contador">
+                    <button class="btn-control" onclick="updateCart('${nombre}_gr','${nombre} Grande',300,-1)">-</button>
+                    <span id="ui-${nombre}_gr" class="count-val">0</span>
+                    <button class="btn-control" onclick="updateCart('${nombre}_gr','${nombre} Grande',300,1)">+</button>
+                </div>
+            </div>
+            <div class="variante" style="background:transparent; padding:0 10px">
+                <span>Extra Queso Gde. ($90)</span>
+                <div class="contador">
+                    <button class="btn-control" onclick="updateCart('${nombre}_qgr','Queso Extra Gde.',90,-1)">-</button>
+                    <span id="ui-${nombre}_qgr" class="count-val">0</span>
+                    <button class="btn-control" onclick="updateCart('${nombre}_qgr','Queso Extra Gde.',90,1)">+</button>
+                </div>
+            </div>
+        </div>`;
+    document.getElementById('container-pizzas').appendChild(div);
 }
 
-let pizzas=["Marguerita","Valentina","Lucrecia","Alessia","Adriana","Kalena","Leilani","Olivia","Bianca","Francesca","Sofia","Amalia","Marietta"]
-
-let cont=document.getElementById("pizzas")
-
-pizzas.forEach(p=>{
-
-cont.innerHTML+=`
-<div class="producto">
-
-<b onclick="toggleP('${p}')">${p}</b>
-
-<div id="box-${p}" style="display:none">
-
-<p>Selecciona tamaño:</p>
-
-<button onclick="add('${p} Individual',150)">Individual</button>
-<button onclick="add('${p} Grande',250)">Grande</button>
-
-<p>Extra queso?</p>
-<button onclick="add('${p} queso',30)">+</button>
-
-</div>
-
-</div>
-`
-})
-
-function toggleP(p){
-let d=document.getElementById("box-"+p)
-d.style.display=d.style.display=="none"?"block":"none"
+function toggleCarrito() {
+    const p = document.getElementById("panel");
+    p.style.display = p.style.display === "block" ? "none" : "block";
 }
 
+function enviarWhatsApp() {
+    const nombre = document.getElementById("nombre").value;
+    if (!nombre) { alert("Por favor, escribe tu nombre"); return; }
+    
+    let mensaje = `*PEDIDO RED LIGHT PIZZA*%0ACliente: ${nombre}%0A--------------------------%0A`;
+    for (let id in cart) {
+        mensaje += `- ${cart[id].name} x${cart[id].cant} ($${cart[id].price * cart[id].cant})%0A`;
+    }
+    mensaje += `--------------------------%0A*TOTAL: $${document.getElementById("totalPrecio").innerText}*`;
+    window.open(`https://wa.me/529515813970?text=${mensaje}`);
+}
+
+// Inicialización
+MENU.bebidas.forEach(b => crearSimple(b, 'container-bebidas'));
+MENU.entradas.forEach(e => crearSimple(e, 'container-entradas'));
+MENU.pizzas.forEach(p => crearPizza(p));
 </script>
 
 </body>
